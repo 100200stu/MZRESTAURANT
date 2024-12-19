@@ -190,9 +190,12 @@ header {
 
 .carousel-track {
     display: flex;
-    gap: 20px;
-    will-change: transform; /* Optimized for smooth animation */
-    animation: scroll-infinite 30s linear infinite;
+    transition: transform 0.3s ease; /* Smooth snapback */
+    cursor: grab;
+}
+
+.carousel-track.grabbing {
+    cursor: grabbing;
 }
 
 /* Dish Card Styling */
