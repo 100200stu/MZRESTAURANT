@@ -37,8 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Succes: navigeer naar menu.php
-        alert(`Uw bestelling is ingesteld voor ${orderType}`);
+        // Directe navigatie naar menu.php
         window.location.href = 'menu.php';
     });
 
