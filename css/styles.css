@@ -1,0 +1,223 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    
+}
+@font-face {
+    font-family: 'MyFont';
+    src: url('../font/berlin-sans-fb/BRLNSB.TTF') format('truetype');
+    font-weight: normal; /* Adjust weight if needed */
+    font-style: normal;  /* Adjust style if needed */
+    
+}
+@font-face {
+    font-family: 'MyFont2';
+    src: url('../font/sunborn.otf') format('truetype');
+    font-weight: normal; /* Adjust weight if needed */
+    font-style: normal;  /* Adjust style if needed */
+    
+}
+
+/* Body Background */
+body {
+    background-color: #ffcf53; 
+    background-image: url('../images/test.svg'); /* Path to your pattern image */
+    background-repeat: repeat; /* Ensures the pattern repeats horizontally and vertically */
+    background-size: 1200px; /* Adjusts the size of the pattern */
+    font-family: 'MyFont';
+    letter-spacing: 1px;
+}
+
+/* Header */
+header {
+    background-color: #d1321b;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between; /* Aligns logo and menu properly */
+    align-items: center; /* Centers items vertically */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Ensures the navbar spans the full header width */
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 80px; /* Larger logo */
+    width: auto; /* Maintains aspect ratio */
+    object-fit: contain; /* Prevents distortion */
+}
+
+/* Navigation Menu */
+.nav-links {
+    display: flex;
+    gap: 30px; /* Space between menu items */
+    list-style: none;
+    margin-left: auto; /* Pushes the menu to the right */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ffc107;
+    font-size: 18px; /* Slightly larger font */
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav-links a.active, 
+.nav-links a:hover {
+    color: #ffffff;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(50%);
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px; /* Space between buttons */
+    justify-content: center;
+
+}
+
+.btn-primary {
+    background-color: #d1321b; /* Red button color */
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px 25px;
+    border-radius: 5px;
+    border: 2px solid #d1321b;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #a12615; /* Darker red on hover */
+    transform: scale(1.05); /* Slight scaling effect */
+}
+
+.btn-secondary {
+    background-color: #ffc107; /* Yellow button color */
+    color: #d1321b;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px 25px;
+    border-radius: 5px;
+    border: 2px solid #ffc107;
+    margin-left: 10px; /* Adds extra space between buttons */
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-secondary:hover {
+    background-color: #e0a805; /* Darker yellow on hover */
+    transform: scale(1.05); /* Slight scaling effect */
+}
+/* Best Dishes Section */
+.best-dishes {
+    padding: 50px 20px;
+    background-color: #ffcf53;
+    background-image: url('../images/test.svg'); /* Use your background pattern */
+    background-repeat: repeat;
+    background-size: 1200px;
+    text-align: center;
+    overflow: hidden; /* Hides overflow for carousel */
+}
+
+.dishes-header {
+    margin-bottom: 30px;
+}
+
+.dishes-title {
+    font-family: 'MyFont2', sans-serif;
+    font-size: 3rem;
+    color: #d1321b;
+    text-shadow: 2px 2px 0px #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.dishes-subtitle {
+    font-family: 'MyFont', sans-serif;
+    font-size: 1.2rem;
+    color: #000;
+    font-weight: bold;
+}
+
+/* Carousel Styles */
+/* Carousel Styles */
+.carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #ffcf53;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 20px;
+    will-change: transform; /* Optimized for smooth animation */
+    animation: scroll-infinite 30s linear infinite;
+}
+
+.dish-card {
+    flex: 0 0 250px;
+    background-color: #d1321b;
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dish-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+/* Keyframes for smooth infinite scrolling */
+@keyframes scroll-infinite {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
