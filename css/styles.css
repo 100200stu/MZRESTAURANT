@@ -195,36 +195,47 @@ header {
     animation: scroll-infinite 30s linear infinite;
 }
 
+/* Dish Card Styling */
 .dish-card {
     flex: 0 0 250px;
     background-color: #d1321b;
     color: white;
-    border-radius: 10px;
+    border-radius: 20px; /* Rounded corners for card */
     padding: 20px;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 3px solid white; /* White border around the card */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dish-card:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .dish-card img {
-    width: 100%;
+    width: 80%; /* Slightly smaller width to show yellow background */
     height: auto;
-    border-radius: 50%;
+    border-radius: 50%; /* Makes the image circular */
     margin-bottom: 15px;
+    border: 3px solid white; /* White border around the image */
+    background-color: #ffc107; /* Yellow background behind the image */
+    padding: 5px; /* Adds space between the image and yellow background */
+    box-sizing: border-box; /* Ensures padding and border are included in width */
 }
 
-.btn-red {
-    background-color: #ff0000; /* Adjust this to match your site's red color */
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+.dish-card h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
-.btn-red:hover {
-    background-color: #cc0000; /* Darker shade for hover effect */
+.dish-card p {
+    font-size: 14px;
+    margin-bottom: 0;
 }
+
+
 
 /* Keyframes for smooth infinite scrolling */
 @keyframes scroll-infinite {
