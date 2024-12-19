@@ -32,3 +32,77 @@ const infiniteScroll = () => {
 
 // Start infinite scrolling
 requestAnimationFrame(infiniteScroll);
+document.addEventListener('DOMContentLoaded', () => {
+    const menuItems = [
+        { id: 1, category: 'beef', name: 'Classic Beef Burger', price: 6.49, img: '../images/burger.png', desc: 'Juicy beef patty with fresh lettuce and tomato.' },
+        { id: 2, category: 'chicken', name: 'Grilled Chicken Burger', price: 6.49, img: '../images/chicken-burger.png', desc: 'Grilled chicken breast with cheese.' },
+        { id: 3, category: 'loaded', name: 'Loaded Fries', price: 5.99, img: '../images/fries.png', desc: 'Fries topped with cheese and bacon bits.' },
+    ];
+
+    const menuContainer = document.getElementById('menu-items');
+    const popup = document.getElementById('popup-modal');
+    const cart = document.getElementById('cart');
+    const cartItems = [];
+
+    const renderMenu = (category) => {
+        menuContainer.innerHTML = '';
+        menuItems
+            .filter(item => item.category === category)
+            .forEach(item => {
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+                menuItem.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}">
+                    <h3>${item.name}</h3>
+                    <p class="price">€${item.price.toFixed(2)}</p>
+                `;
+                menuItem.addEventListener('click', () => openPopup(item));
+                menuContainer.appendChild(menuItem);
+            });
+    };
+
+    const openPopup = (item) => {
+        document.getElementById('popup-image').src = item.img;
+        document.getElementById('popup-title').innerText = item.name;
+        document.getElementById('popup-description').innerText = item.desc;
+        document.getElementById('popup-price').innerText = `€${item.price.toFixed(2)}`;
+        document.getElementById('add-to-cart-btn').onclick = () => addToCart(item);
+        popup.classList.remove('hidden');
+    };
+
+    const addToCart = (item) => {
+        cartItems.push(item);
+        updateCart();
+        popup.classList.add('hidden');
+    };
+
+    const updateCart = () => {
+        const cartList = document.getElementById('cart-items');
+        const total = document.getElementById('cart-total');
+        cartList.innerHTML = '';
+        let totalPrice = 0;
+        cartItems.forEach(item => {
+            totalPrice += item.price;
+            const cartItem = document.createElement('li');
+            cartItem.innerText = `${item.name} - €${item.price.toFixed(2)}`;
+            cartList.appendChild(cartItem);
+        });
+        total.innerText = `€${totalPrice.toFixed(2)}`;
+        cart.classList.remove('hidden');
+    };
+
+    document.getElementById('close-popup-btn').addEventListener('click', () => {
+        popup.classList.add('hidden');
+    });
+
+    // Initial rendering
+    renderMenu('beef');
+
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelector('.tab.active').classList.remove('active');
+            tab.classList.add('active');
+            renderMenu(tab.dataset.category);
+        });
+    });
+});
