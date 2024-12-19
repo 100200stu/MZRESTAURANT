@@ -148,6 +148,7 @@ header {
     background-color: #e0a805; /* Darker yellow on hover */
     transform: scale(1.05); /* Slight scaling effect */
 }
+
 /* Best Dishes Section */
 .best-dishes {
     padding: 50px 20px;
@@ -180,7 +181,6 @@ header {
 }
 
 /* Carousel Styles */
-/* Carousel Styles */
 .carousel {
     position: relative;
     width: 100%;
@@ -212,6 +212,20 @@ header {
     margin-bottom: 15px;
 }
 
+.btn-red {
+    background-color: #ff0000; /* Adjust this to match your site's red color */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-red:hover {
+    background-color: #cc0000; /* Darker shade for hover effect */
+}
+
 /* Keyframes for smooth infinite scrolling */
 @keyframes scroll-infinite {
     0% {
@@ -220,4 +234,25 @@ header {
     100% {
         transform: translateX(-100%);
     }
+}
+
+/* New Additions */
+.btn-menukaart {
+    display: inline-block;
+    background-color: #d1321b; /* Matches the button color */
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 20px;
+}
+
+.btn-menukaart:hover {
+    background-color: #a92916; /* Slightly darker red for hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
 }
