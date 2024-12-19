@@ -8,37 +8,38 @@
     <script src="script/script.js" defer></script>
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <img src="images/Blue and White Circle Surfing Club Logo.png" alt="M&Z Logo">
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="#order">Bestellen</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <video autoplay loop muted class="hero-video">
-            <source src="videos/IMG_2096.mov" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="hero-content">
-            <h1>Welkom bij <br> M&Z Restaurant</h1>
-            <div class="hero-buttons">
-                <a href="#order" class="btn btn-primary">Bestellen</a>
-                <a href="#menu" class="btn btn-secondary">Menu</a>
-            </div>
+<!-- Header Section -->
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/Blue and White Circle Surfing Club Logo.png" alt="M&Z Logo">
         </div>
-    </section>
+        <ul class="nav-links">
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="pages/menu.php" class="btn-menukaart">Menukaart</a></li>
+            <li><a href="#order">Bestellen</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="pages/admin_dashboard.php" class="btn-admin">Admin</a></li> <!-- Admin link updated -->
+        </ul>
+    </nav>
+</header>
 
-  <!-- Best Dishes Section -->
+<!-- Hero Section -->
+<section class="hero">
+    <video autoplay loop muted class="hero-video">
+        <source src="videos/IMG_2096.mov" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="hero-content">
+        <h1>Welkom bij <br> M&Z Restaurant</h1>
+        <div class="hero-buttons">
+            <a href="#order" class="btn btn-primary">Bestellen</a>
+            <a href="#menu" class="btn btn-secondary">Menu</a>
+        </div>
+    </div>
+</section>
+
+<!-- Best Dishes Section -->
 <section class="best-dishes">
     <div class="dishes-header">
         <h1 class="dishes-title">Onze beste gerechten</h1>
@@ -74,8 +75,7 @@
         </div>
     </div>
     <!-- Button -->
-    <a href="#menu" class="btn-menukaart">Menukaart</a>
+    <a href="pages/menu.php" class="btn-menukaart">Menukaart</a>
 </section>
-
 </body>
 </html>
