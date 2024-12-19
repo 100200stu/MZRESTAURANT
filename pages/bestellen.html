@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M&Z Restaurant - Bestellen</title>
+    <link rel="stylesheet" href="/css/bestellen.css">
+    <script src="/script/order.js" defer></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="/images/Blue and White Circle Surfing Club Logo.png" alt="M&Z Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="#order" class="active">Bestellen</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Popup Modal -->
+    <div id="order-popup" class="popup">
+        <div class="popup-content">
+            <!-- Stap 1: Kies Afhalen of Bezorging -->
+            <div id="step-1">
+                <h2>Kies een optie</h2>
+                <button class="btn-primary" id="pickup">Afhalen</button>
+                <button class="btn-secondary" id="delivery">Bezorging</button>
+            </div>
+    
+            <!-- Stap 2: Voer de postcode in -->
+            <div id="step-2" class="hidden">
+                <h2>Voer uw postcode in</h2>
+                <input type="text" id="postcode" placeholder="Voer uw postcode in">
+                <button class="btn-primary" id="validate-postcode">Ga Verder</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 M&Z Restaurant</p>
+    </footer>
+</body>
+</html>
