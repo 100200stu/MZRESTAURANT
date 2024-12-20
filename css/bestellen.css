@@ -8,12 +8,12 @@
 
 @font-face {
     font-family: 'MyFont';
-    src: url('../font/berlin-sans-fb/BRLNSB.TTF') format('truetype');
+    src: url('/font/berlin-sans-fb/BRLNSR.TTF') format('truetype');
 }
 
 body {
-    background-color: #ffcf53;
     font-family: 'MyFont', sans-serif;
+    background-color: #ffcf53;
     letter-spacing: 1px;
 }
 
@@ -51,22 +51,6 @@ header {
     color: #ffffff;
 }
 
-/* Main Content */
-main {
-    text-align: center;
-    padding: 20px;
-}
-
-.hero h1 {
-    font-size: 2rem;
-    color: #d1321b;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    margin-top: 10px;
-}
-
 /* Popup Styles */
 .popup {
     position: fixed;
@@ -74,12 +58,12 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Donkere overlay */
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Zorg dat de pop-up boven alles staat */
-    backdrop-filter: blur(5px); /* Voeg lichte vervaging toe aan de achtergrond */
+    z-index: 1000;
+    backdrop-filter: blur(5px);
 }
 
 .popup-content {
@@ -90,6 +74,87 @@ main {
     width: 90%;
     max-width: 400px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'MyFont', sans-serif;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Modern Input Field Styling */
+.input-container {
+    position: relative;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.modern-input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    outline: none;
+    background: none;
+    color: #333;
+}
+
+.modern-input:focus {
+    border-color: #d1321b;
+    box-shadow: 0 0 5px rgba(209, 50, 27, 0.5);
+}
+
+.modern-input:focus + .modern-label,
+.modern-input:not(:placeholder-shown) + .modern-label {
+    transform: translateY(-25px);
+    font-size: 12px;
+    color: #d1321b;
+}
+
+.modern-label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #aaa;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+/* Dropdown voor vestigingselectie */
+#step-2 select {
+    font-family: 'MyFont', sans-serif;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    text-align: center;
+}
+
+#location-details {
+    margin-top: 20px;
+}
+
+#location-details p {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #333;
+}
+
+/* Map styling */
+#map-container {
+    margin: 10px 0;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+#map {
+    border-radius: 5px;
 }
 
 /* Buttons */
@@ -106,31 +171,26 @@ button {
     color: #fff;
 }
 
+.btn-primary:hover {
+    background-color: #a12615;
+}
+
 .btn-secondary {
     background-color: #ffc107;
     color: #000;
-}
-
-.btn-primary:hover {
-    background-color: #a12615;
 }
 
 .btn-secondary:hover {
     background-color: #e0a805;
 }
 
-/* Hidden class */
-.hidden {
-    display: none;
-}
-
 /* Melding Stijlen */
 #message-container {
-    margin: 20px auto;
-    padding: 15px;
-    max-width: 400px;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 14px;
     text-align: center;
 }
 
@@ -146,15 +206,11 @@ button {
     border: 1px solid #f5c6cb;
 }
 
-.hidden {
-    display: none;
-}
-
-
 /* Footer */
 footer {
     background-color: #d1321b;
     color: #ffffff;
     text-align: center;
     padding: 10px 0;
+    font-family: 'MyFont', sans-serif;
 }
