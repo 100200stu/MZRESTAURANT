@@ -1,216 +1,40 @@
-/* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M&Z Restaurant - Bestellen</title>
+<link rel="stylesheet" href="../css/bestellen.css">
+<script src="../script/order.js" defer></script>
+</head>
+<body>
+<!-- Header Section -->
+<header>
+<nav class="navbar">
+<div class="logo">
+<img src="/images/Blue and White Circle Surfing Club Logo.png" alt="M&Z Logo">
+</div>
+<ul class="nav-links">
+<li><a href="#home">Home</a></li>
+<li><a href="menu.php">Menu</a></li>
+<li><a href="#order" class="active">Bestellen</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+</header>
 
-@font-face {
-    font-family: 'MyFont';
-    src: url('/font/berlin-sans-fb/BRLNSR.TTF') format('truetype');
-}
+<!-- Popup Modal -->
+<div id="order-popup" class="popup">
+<div class="popup-content">
+<h2>Kies een optie</h2>
+<button class="btn-primary" id="pickup" onclick="location.href='menu.php?method=pickup'">Afhalen</button>
+<button class="btn-secondary" id="delivery" onclick="location.href='menu.php?method=delivery'">Bezorging</button>
+</div>
+</div>
 
-body {
-    font-family: 'MyFont', sans-serif;
-    background-color: #ffcf53;
-    letter-spacing: 1px;
-}
-
-/* Header */
-header {
-    background-color: #d1321b;
-    padding: 20px;
-}
-
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo img {
-    height: 60px;
-}
-
-.nav-links {
-    display: flex;
-    gap: 20px;
-}
-
-.nav-links a {
-    color: #ffc107;
-    font-size: 18px;
-    font-weight: bold;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.nav-links a.active,
-.nav-links a:hover {
-    color: #ffffff;
-}
-
-/* Popup Styles */
-.popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    backdrop-filter: blur(5px);
-}
-
-.popup-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    font-family: 'MyFont', sans-serif;
-}
-
-.hidden {
-    display: none;
-}
-
-/* Modern Input Field Styling */
-.input-container {
-    position: relative;
-    width: 100%;
-    margin: 20px 0;
-}
-
-.modern-input {
-    width: 100%;
-    padding: 10px 15px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    outline: none;
-    background: none;
-    color: #333;
-}
-
-.modern-input:focus {
-    border-color: #d1321b;
-    box-shadow: 0 0 5px rgba(209, 50, 27, 0.5);
-}
-
-.modern-input:focus + .modern-label,
-.modern-input:not(:placeholder-shown) + .modern-label {
-    transform: translateY(-25px);
-    font-size: 12px;
-    color: #d1321b;
-}
-
-.modern-label {
-    position: absolute;
-    top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
-    font-size: 16px;
-    color: #aaa;
-    pointer-events: none;
-    transition: all 0.3s ease;
-}
-
-/* Dropdown voor vestigingselectie */
-#step-2 select {
-    font-family: 'MyFont', sans-serif;
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    text-align: center;
-}
-
-#location-details {
-    margin-top: 20px;
-}
-
-#location-details p {
-    font-size: 16px;
-    margin: 10px 0;
-    color: #333;
-}
-
-/* Map styling */
-#map-container {
-    margin: 10px 0;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-#map {
-    border-radius: 5px;
-}
-
-/* Buttons */
-button {
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.btn-primary {
-    background-color: #d1321b;
-    color: #fff;
-}
-
-.btn-primary:hover {
-    background-color: #a12615;
-}
-
-.btn-secondary {
-    background-color: #ffc107;
-    color: #000;
-}
-
-.btn-secondary:hover {
-    background-color: #e0a805;
-}
-
-/* Melding Stijlen */
-#message-container {
-    margin: 10px 0;
-    padding: 10px;
-    width: 100%;
-    border-radius: 5px;
-    font-size: 14px;
-    text-align: center;
-}
-
-#message-container.success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-#message-container.error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-/* Footer */
-footer {
-    background-color: #d1321b;
-    color: #ffffff;
-    text-align: center;
-    padding: 10px 0;
-    font-family: 'MyFont', sans-serif;
-}
+<!-- Footer Section -->
+<footer>
+<p>&copy; 2024 M&Z Restaurant</p>
+</footer>
+</body>
+</html>
