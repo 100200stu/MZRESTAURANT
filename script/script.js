@@ -90,7 +90,7 @@ const getPositionX = (event) => {
 
 // While dragging
 const dragMove = (event) => {
-    if (!isDragging) return;
+    if (!isDragging) return; // Stop if not dragging
     const currentX = getPositionX(event);
     currentTranslate = prevTranslate + (currentX - startX);
     carouselTrack.style.transform = `translateX(${currentTranslate}px)`;
@@ -98,7 +98,9 @@ const dragMove = (event) => {
 
 // End dragging
 const dragEnd = () => {
+    if (!isDragging) return; // Prevent unnecessary execution
     isDragging = false;
+
     const movedBy = currentTranslate - prevTranslate;
 
     // Determine direction based on drag distance
@@ -113,7 +115,7 @@ const dragEnd = () => {
     carouselTrack.style.transition = "transform 0.3s ease"; // Smooth snap
     carouselTrack.style.transform = `translateX(${currentTranslate}px)`;
 
-    carouselTrack.addEventListener('transitionend', handleInfiniteScroll);
+    handleInfiniteScroll();
 };
 
 // Handle infinite loop logic
@@ -134,19 +136,31 @@ const handleInfiniteScroll = () => {
         currentTranslate = totalTranslate;
         carouselTrack.style.transform = `translateX(${currentTranslate}px)`;
     }
+};
 
-    carouselTrack.removeEventListener('transitionend', handleInfiniteScroll);
+// Prevent movement when not holding down the mouse
+const resetDraggingState = () => {
+    isDragging = false;
 };
 
 // Event listeners
-carouselTrack.addEventListener('mousedown', dragStart);
+carouselTrack.addEventListener('mousedown', (event) => {
+    event.preventDefault(); // Prevent unwanted text selection
+    dragStart(event);
+});
+
 carouselTrack.addEventListener('mousemove', dragMove);
+
 carouselTrack.addEventListener('mouseup', dragEnd);
 carouselTrack.addEventListener('mouseleave', dragEnd);
 
 carouselTrack.addEventListener('touchstart', dragStart);
 carouselTrack.addEventListener('touchmove', dragMove);
 carouselTrack.addEventListener('touchend', dragEnd);
+
+// Reset dragging state on mouseup/touchend outside the carousel
+document.addEventListener('mouseup', resetDraggingState);
+document.addEventListener('touchend', resetDraggingState);
 
 // Initialize carousel
 setupInfiniteLoop();
