@@ -147,7 +147,7 @@
             isDragging = false;
         };
 
-        // Event listeners
+        // Event listeners for dragging
         carouselTrack.addEventListener('mousedown', (event) => {
             event.preventDefault(); // Prevent unwanted text selection
             dragStart(event);
@@ -166,6 +166,6 @@
         document.addEventListener('mouseup', resetDraggingState);
         document.addEventListener('touchend', resetDraggingState);
 
-        // Initialize carousel
+        // Initialize carousel with infinite loop setup
         setupInfiniteLoop();
     });

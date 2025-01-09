@@ -169,16 +169,32 @@ header {
     font-weight: bold;
 }
 
+/* Carousel container */
+.carousel {
+    overflow: hidden; /* Hide overflowed content */
+    position: relative;
+    width: 100%; /* Set the width of the carousel */
+    height: auto;
+}
+
+
 .carousel-track {
     display: flex;
     transition: transform 0.3s ease; /* Smooth snap animation */
     will-change: transform;
 }
+/* Each card styling */
+.dish-card {
+    flex: 0 0 auto; /* Prevent cards from shrinking or growing */
+    width: 200px; /* Set a fixed width for cards */
+    margin-right: 20px; /* Space between cards */
+}
 
-
-.carousel {
-    overflow: hidden; /* Prevent showing overflowed cards */
-    position: relative;
+/* Additional styling for visual effect */
+.carousel img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
 }
 
 
