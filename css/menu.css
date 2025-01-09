@@ -5,10 +5,10 @@
     box-sizing: border-box;
 }
 
-/* Body Background */
+/* Body Styling */
 body {
-    background-color: #ffcf53;
-    background-image: url('../images/test.svg');
+    background-color: #ffcf53; /* Algemene achtergrondkleur */
+    background-image: url('../images/test.svg'); /* Achtergrondpatroon */
     background-repeat: repeat;
     background-size: 1200px;
     font-family: Arial, sans-serif;
@@ -37,7 +37,6 @@ header {
 /* Logo */
 .logo img {
     height: 60px;
-    width: auto;
     object-fit: contain;
 }
 
@@ -63,32 +62,35 @@ header {
 
 /* Burger Menu */
 .burger-menu {
-    display: none; /* Hidden on larger screens */
+    display: none; /* Verborgen op grotere schermen */
     flex-direction: column;
     justify-content: space-between;
     width: 30px;
     height: 20px;
     cursor: pointer;
+    background-color: #d1321b; /* Achtergrondkleur voor de burger-menu */
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .burger-menu span {
     display: block;
     height: 3px;
     width: 100%;
-    background-color: #ffc107;
+    background-color: #ffc107; /* Kleur van de lijnen */
     border-radius: 5px;
 }
 
-/* Mobile Navigation */
+/* Responsive Burger Menu */
 @media (max-width: 768px) {
     .burger-menu {
-        display: flex; /* Show on smaller screens */
+        display: flex; /* Toon op kleine schermen */
     }
 
     .nav-links {
-        display: none; /* Hide by default */
+        display: none; /* Verberg standaard */
         flex-direction: column;
-        background-color: #d1321b;
+        background-color: #d1321b; /* Achtergrondkleur voor mobiele menu */
         position: absolute;
         top: 60px;
         right: 0;
@@ -98,7 +100,7 @@ header {
     }
 
     .nav-links.active {
-        display: flex; /* Show when active */
+        display: flex; /* Toon menu wanneer actief */
     }
 
     .nav-links li {
@@ -111,45 +113,82 @@ header {
     }
 }
 
-/* Menu Items */
+/* Tabs */
 .menu-tabs {
-    display: flex;
-    justify-content: center;
+    overflow-x: auto; /* Maak horizontaal scrollbaar */
+    white-space: nowrap; /* Zorg dat knoppen op één lijn blijven */
     background-color: #d1321b;
     padding: 10px 0;
+    position: sticky; /* Tabs blijven bovenaan bij scrollen */
+    top: 60px;
+    z-index: 999;
+    -ms-overflow-style: none; /* Verberg scrollbalk in IE */
+    scrollbar-width: none; /* Verberg scrollbalk in Firefox */
+}
+
+.menu-tabs::-webkit-scrollbar {
+    display: none; /* Verberg scrollbalk in Chrome/Safari */
+}
+
+.menu-tabs-container {
+    display: flex;
+    gap: 10px; /* Ruimte tussen de tabs */
+    padding: 0 10px;
 }
 
 .tab {
-    padding: 10px 20px;
-    margin: 0 5px;
+    display: inline-block;
+    padding: 10px 15px;
     color: white;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     border: none;
-    background-color: transparent;
-    border-bottom: 3px solid transparent;
-    transition: all 0.3s;
+    background-color: #ffc107; /* Kleur van de tabs */
+    border-radius: 5px;
+    text-align: center;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* Voorkom tekstterugloop */
 }
 
+.tab:hover,
 .tab.active {
-    border-bottom: 3px solid #ffc107;
+    background-color: #d1321b; /* Hoverkleur van de tabs */
+    color: #ffc107;
 }
 
-.menu-items {
-    display: block;
+/* Categorie Secties */
+section {
+    margin: 20px 0;
     padding: 20px;
-    margin-bottom: 20px;
+    background-color: #b81b1b; /* Achtergrondkleur van secties */
+    border-radius: 10px;
+}
+
+section h2 {
+    font-size: 24px;
+    color: #d1321b;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Menu Items */
+.menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
 }
 
 .menu-item {
-    background-color: #d1321b;
+    background-color: #d1321b; /* Achtergrondkleur van items */
     color: white;
-    width: 100%;
-    max-width: 400px;
-    margin: 10px auto;
+    width: 300px;
     padding: 15px;
     border-radius: 10px;
     text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
 }
 
@@ -158,8 +197,8 @@ header {
 }
 
 .menu-item img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
     border-radius: 50%;
     margin-bottom: 10px;
@@ -169,4 +208,11 @@ header {
     font-size: 18px;
     margin-top: 10px;
     color: #ffc107;
+}
+
+/* Responsiveness for Small Screens */
+@media (max-width: 768px) {
+    .menu-item {
+        width: 90%; /* Laat items de meeste breedte innemen */
+    }
 }
