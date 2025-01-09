@@ -33,10 +33,13 @@ function getOrderItems($conn, $order_id) {
 // Handle order status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'], $_POST['action'])) {
     $order_id = $_POST['order_id'];
+    $action = $_POST['action'];
 
-    if ($_POST['action'] === 'assign') {
+    if ($action === 'ready') {
+        $update_sql = "UPDATE orders SET status = 'ready_for_delivery' WHERE id = $order_id";
+    } elseif ($action === 'assign') {
         $update_sql = "UPDATE orders SET status = 'out_for_delivery' WHERE id = $order_id";
-    } elseif ($_POST['action'] === 'deliver') {
+    } elseif ($action === 'deliver') {
         $update_sql = "UPDATE orders SET status = 'delivered', completed_at = NOW() WHERE id = $order_id";
     }
     $conn->query($update_sql);
@@ -95,6 +98,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'], $_POST['a
                         <li><?= $item['quantity'] ?> x <?= htmlspecialchars($item['item_name']) ?></li>
                     <?php endwhile; ?>
                 </ul>
+
+                <!-- Status Update Buttons -->
+                <?php if ($row['status'] === 'in_kitchen'): ?>
+                    <form method="POST">
+                        <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
+                        <input type="hidden" name="action" value="ready">
+                        <button type="submit">Order Ready</button>
+                    </form>
+                <?php elseif ($row['status'] === 'ready_for_delivery'): ?>
+                    <form method="POST">
+                        <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
+                        <input type="hidden" name="action" value="assign">
+                        <button type="submit">Ready for Delivery</button>
+                    </form>
+                <?php elseif ($row['status'] === 'out_for_delivery'): ?>
+                    <form method="POST">
+                        <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
+                        <input type="hidden" name="action" value="deliver">
+                        <button type="submit">Delivered</button>
+                    </form>
+                <?php endif; ?>
 
                 <?php if ($view === 'previous'): ?>
                     <p><strong>Completed At:</strong> <?= htmlspecialchars($row['completed_at']) ?></p>
