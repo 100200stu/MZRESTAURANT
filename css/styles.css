@@ -169,35 +169,17 @@ header {
     font-weight: bold;
 }
 
-/* Scrollable Carousel */
-.carousel {
-    position: relative;
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 10px;
-    padding: 20px;
-    background: transparent;
-}
-
-.carousel::-webkit-scrollbar {
-    height: 8px;
-}
-
-.carousel::-webkit-scrollbar-thumb {
-    background: #d1321b;
-    border-radius: 10px;
-}
-
-.carousel::-webkit-scrollbar-thumb:hover {
-    background: #a12615;
-}
-
 .carousel-track {
     display: flex;
-    gap: 20px;
-    flex-wrap: nowrap;
+    transition: transform 0.3s ease-out;
+    will-change: transform;
 }
+
+.carousel {
+    overflow: hidden; /* Prevent showing overflowed cards */
+    position: relative;
+}
+
 
 .dish-card {
     flex: 0 0 250px;

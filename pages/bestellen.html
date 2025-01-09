@@ -6,8 +6,6 @@
     <title>M&Z Restaurant - Bestellen</title>
     <link rel="stylesheet" href="../css/bestellen.css">
     <script src="/script/order.js" defer></script>
-
-
 </head>
 <body>
 <!-- Header Section -->
@@ -26,15 +24,16 @@
 </header>
 
 <!-- Popup Modal -->
-<div id="order-popup" class="popup">
+<div id="order-popup" class="popup hidden">
     <div class="popup-content">
-        <!-- Stap 1: Kies Afhalen of Bezorging -->
+        <!-- Step 1: Choose Pickup or Delivery -->
         <div id="step-1">
             <h2>Kies een optie</h2>
             <button class="btn-primary" id="pickup">Afhalen</button>
             <button class="btn-secondary" id="delivery">Bezorging</button>
         </div>
 
+        <!-- Step 2: Choose Location -->
         <div id="step-2" class="hidden">
             <h2>Kies een vestiging</h2>
             <select id="location-select">
@@ -58,7 +57,7 @@
             </div>
         </div>
 
-
+        <!-- Step 3: Enter Postcode -->
         <div id="step-3" class="hidden">
             <h2>Voer uw postcode in</h2>
             <div class="input-container">
@@ -68,7 +67,6 @@
             <div id="message-container" class="hidden"></div>
             <button class="btn-primary" id="validate-postcode">Ga Verder</button>
         </div>
-
     </div>
 </div>
 
@@ -78,4 +76,3 @@
 </footer>
 </body>
 </html>
-
