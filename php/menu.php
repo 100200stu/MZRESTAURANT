@@ -23,6 +23,7 @@ $menu_items_result = $conn->query($menu_items_sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M&Z Restaurant</title>
     <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/styles.css">
     <script src="../script/script.js" defer></script>
 </head>
 <body>
