@@ -1,10 +1,16 @@
-
 /* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     text-decoration: none;
+}
+
+/* Prevent horizontal scrolling */
+html, body {
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+    width: 100vw; /* Ensures the body doesn't exceed viewport width */
+    height: 100%; /* Ensure the height stretches to 100% of the viewport */
 }
 
 /* Fonts */
@@ -30,6 +36,8 @@ body {
     background-size: 1200px;
     font-family: 'MyFont', Arial, sans-serif;
     letter-spacing: 1px;
+    width: 100%;
+    height: 100%; /* Ensure body takes full height */
 }
 
 /* Header */
@@ -39,13 +47,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+    width: 100%; /* Ensure header fits the width */
+    max-width: 100%; /* Prevent exceeding viewport width */
+    box-sizing: border-box;
 }
 
 /* Logo */
@@ -77,6 +81,8 @@ header {
     gap: 30px;
     list-style: none;
     margin-left: auto;
+    width: 100%; /* Ensure nav-links don't overflow */
+    max-width: 100%;
 }
 
 .nav-links a {
@@ -101,7 +107,8 @@ header {
         background-color: #d1321b;
         padding: 40px;
         border-radius: 10px;
-        width: 450px;
+        width: 100%; /* Ensure full width */
+        max-width: 450px;
         overflow: hidden;
         height: 0; /* Initially collapsed */
         opacity: 0; /* Hide initially */
@@ -161,6 +168,8 @@ header {
     align-items: center;
     text-align: center;
     color: white;
+    width: 100%; /* Ensure hero section fits width */
+    max-width: 100%;
 }
 
 .hero-video {
@@ -185,11 +194,10 @@ header {
     display: flex;
     gap: 20px; /* Space between buttons */
     justify-content: center;
-
 }
 
 .btn-primary {
-    background-color: #d1321b; /* Red button color */
+    background-color: #d1321b;
     color: white;
     font-size: 1.2rem;
     font-weight: bold;
@@ -200,80 +208,64 @@ header {
 }
 
 .btn-primary:hover {
-    background-color: #a12615; /* Darker red on hover */
-    transform: scale(1.05); /* Slight scaling effect */
+    background-color: #a12615;
+    transform: scale(1.05);
 }
 
 .btn-secondary {
-    background-color: #ffc107; /* Yellow button color */
+    background-color: #ffc107;
     color: #d1321b;
     font-size: 1.2rem;
     font-weight: bold;
     padding: 10px 25px;
     border-radius: 5px;
     border: 2px solid #ffc107;
-    margin-left: 10px; /* Adds extra space between buttons */
+    margin-left: 10px;
     transition: background-color 0.3s, transform 0.2s;
 }
 
 .btn-secondary:hover {
-    background-color: #e0a805; /* Darker yellow on hover */
-    transform: scale(1.05); /* Slight scaling effect */
+    background-color: #e0a805;
+    transform: scale(1.05);
 }
 
-/* Best Dishes Section */
+/* Prevent overflow and ensure the content fits */
 .best-dishes {
     padding: 50px 20px;
     text-align: center;
     overflow: hidden;
-}
-
-.dishes-header {
-    margin-bottom: 30px;
-}
-
-.dishes-title {
-    font-size: 3rem;
-    color: #d1321b;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-}
-
-.dishes-subtitle {
-    font-size: 1.2rem;
-    color: #000;
-    font-weight: bold;
+    width: 100%;
 }
 
 /* Carousel container */
 .carousel {
-    overflow: hidden; /* Hide overflowed content */
+    overflow: hidden;
     position: relative;
     width: 100%; /* Set the width of the carousel */
     height: auto;
 }
 
-
 .carousel-track {
     display: flex;
-    transition: transform 0.3s ease; /* Smooth snap animation */
+    transition: transform 0.3s ease;
     will-change: transform;
 }
-/* Each card styling */
+
+/* Card Styling */
 .dish-card {
-    flex: 0 0 auto; /* Prevent cards from shrinking or growing */
-    width: 200px; /* Set a fixed width for cards */
-    margin-right: 20px; /* Space between cards */
+    flex: 0 0 auto;
+    width: 200px;
+    margin-right: 20px;
 }
 
-/* Additional styling for visual effect */
+/* Prevent any child element from overflowing */
 .carousel img {
     width: 100%;
     height: auto;
     object-fit: cover;
 }
 
-
+/* Prevent elements from exceeding the viewport */
 .dish-card {
     flex: 0 0 250px;
     background-color: #d1321b;
@@ -311,138 +303,310 @@ header {
     font-size: 14px;
     margin-bottom: 0;
 }
-/* New Additions */
-.btn-menukaart {
-    display: inline-block;
-    background-color: #d1321b; /* Matches the button color */
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    padding: 15px 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s, transform 0.2s;
-    margin-top: 20px;
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
 }
 
-.btn-menukaart:hover {
-    background-color: #a92916; /* Slightly darker red for hover */
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+/* Prevent horizontal scrolling */
+html, body {
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+    width: 100vw; /* Ensures the body doesn't exceed viewport width */
+    height: 100%; /* Ensure the height stretches to 100% of the viewport */
 }
 
-/* MENU.HTML GEDEELTE */
+/* Fonts */
+@font-face {
+    font-family: 'MyFont';
+    src: url('../font/berlin-sans-fb/BRLNSB.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
-/* General Styles for Menu Page */
-.menu-tabs {
-    display: flex;
-    justify-content: center;
+@font-face {
+    font-family: 'MyFont2';
+    src: url('../font/sunborn.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Body Background */
+body {
+    background-color: #ffcf53;
+    background-image: url('../images/test.svg');
+    background-repeat: repeat;
+    background-size: 1200px;
+    font-family: 'MyFont', Arial, sans-serif;
+    letter-spacing: 1px;
+    width: 100%;
+    height: 100%; /* Ensure body takes full height */
+}
+
+/* Header */
+header {
     background-color: #d1321b;
-    padding: 10px 0;
-}
-
-.tab {
     padding: 10px 20px;
-    margin: 0 5px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    background-color: transparent;
-    border-bottom: 3px solid transparent;
-    transition: all 0.3s;
-}
-
-.tab.active {
-    border-bottom: 3px solid #ffc107;
-}
-
-.menu-items {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px;
-    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Ensure header fits the width */
+    max-width: 100%; /* Prevent exceeding viewport width */
+    box-sizing: border-box;
 }
 
-.menu-item {
-    background-color: #d1321b;
-    color: white;
-    width: 250px;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    position: relative;
+/* Logo */
+.logo img {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
     cursor: pointer;
-    transition: transform 0.2s;
 }
 
-.menu-item:hover {
-    transform: scale(1.05);
+.hamburger .bar {
+    background-color: #ffc107;
+    height: 4px;
+    width: 100%;
+    border-radius: 2px;
 }
 
-.menu-item img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 10px;
+/* Mobile Navbar */
+.nav-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    margin-left: auto;
+    width: 100%; /* Ensure nav-links don't overflow */
+    max-width: 100%;
 }
 
-.menu-item .price {
-    font-size: 18px;
-    margin-top: 10px;
+.nav-links a {
+    text-decoration: none;
     color: #ffc107;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s;
 }
 
-/* Popup Modal */
-.popup-modal {
-    position: fixed;
+/* Mobile Styles: Hide Navigation Links and Show Hamburger Icon */
+@media screen and (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        background-color: #d1321b;
+        padding: 40px;
+        border-radius: 10px;
+        width: 100%; /* Ensure full width */
+        max-width: 450px;
+        overflow: hidden;
+        height: 0; /* Initially collapsed */
+        opacity: 0; /* Hide initially */
+        transition: height 0.5s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    /* Active state for the nav-links */
+    .nav-links.active {
+        height: auto; /* Expands to natural height */
+        opacity: 1; /* Fade-in effect */
+        padding-top: 20%; /* To give space from the top */
+        padding-bottom: 20%; /* To give space at the bottom */
+    }
+
+    .nav-links a {
+        font-size: 18px;
+        margin: 10px 0;
+        color: #fff;
+        transition: color 0.3s;
+        opacity: 0;
+        transform: translateY(10px); /* Start slightly down for smooth transition */
+        transition: all 0.3s ease;
+    }
+
+    .nav-links.active a {
+        opacity: 1;
+        transform: translateY(0); /* Move to original position */
+    }
+
+    /* Change color of the hamburger icon when clicked */
+    .hamburger.active .bar {
+        background-color: #ffffff;
+    }
+
+    /* Hamburger Icon Rotation (Cross Effect) */
+    .hamburger.active .bar:nth-child(1) {
+        transform: rotate(45deg);
+        transform-origin: top left;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: rotate(-45deg);
+        transform-origin: bottom left;
+    }
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    width: 100%; /* Ensure hero section fits width */
+    max-width: 100%;
+}
+
+.hero-video {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(50%);
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    line-height: 1.2;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero-buttons {
     display: flex;
+    gap: 20px; /* Space between buttons */
     justify-content: center;
-    align-items: center;
 }
 
-.popup-content {
-    background: white;
+.btn-primary {
+    background-color: #d1321b;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px 25px;
+    border-radius: 5px;
+    border: 2px solid #d1321b;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #a12615;
+    transform: scale(1.05);
+}
+
+.btn-secondary {
+    background-color: #ffc107;
+    color: #d1321b;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px 25px;
+    border-radius: 5px;
+    border: 2px solid #ffc107;
+    margin-left: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-secondary:hover {
+    background-color: #e0a805;
+    transform: scale(1.05);
+}
+
+/* Prevent overflow and ensure the content fits */
+.best-dishes {
+    padding: 50px 20px;
+    text-align: center;
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Carousel container */
+.carousel {
+    overflow: hidden;
+    position: relative;
+    width: 100%; /* Set the width of the carousel */
+    height: auto;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.3s ease;
+    will-change: transform;
+}
+
+/* Card Styling */
+.dish-card {
+    flex: 0 0 auto;
+    width: 200px;
+    margin-right: 20px;
+}
+
+/* Prevent any child element from overflowing */
+.carousel img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Prevent elements from exceeding the viewport */
+.dish-card {
+    flex: 0 0 250px;
+    background-color: #d1321b;
+    color: white;
+    border-radius: 20px;
     padding: 20px;
-    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 3px solid white;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dish-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dish-card img {
     width: 80%;
-    max-width: 400px;
-    text-align: center;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 3px solid white;
+    background-color: #ffc107;
+    padding: 5px;
 }
 
-.popup-modal.hidden {
-    display: none;
+.dish-card h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
-/* Cart Section */
-.cart {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 300px;
-    background: white;
-    border-top-left-radius: 20px;
-    padding: 15px;
-    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+.dish-card p {
+    font-size: 14px;
+    margin-bottom: 0;
 }
-
-.cart.hidden {
-    display: none;
-}
-
-.cart-summary {
-    margin-top: 20px;
-    text-align: center;
-}
-
-
-
 
