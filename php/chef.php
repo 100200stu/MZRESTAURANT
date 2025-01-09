@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
     $order_id = $_POST['order_id'];
     $update_sql = "UPDATE orders SET status = 'ready_for_delivery' WHERE id = $order_id";
     $conn->query($update_sql);
-    header("Location: chef.php"); // Refresh the page
+    header("Location: chef.php?view=active"); // Refresh the page
     exit;
 }
 ?>
@@ -72,12 +72,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
                 <ul>
                     <?php
                     $items_result = getOrderItems($conn, $row['id']);
-                    while ($item = $items_result->fetch_assoc()):
+                    if ($items_result && $items_result->num_rows > 0):
+                        while ($item = $items_result->fetch_assoc()):
+                            ?>
+                            <li><?= $item['quantity'] ?> x <?= htmlspecialchars($item['item_name']) ?></li>
+                        <?php
+                        endwhile;
+                    else:
                         ?>
-                        <li><?= $item['quantity'] ?> x <?= htmlspecialchars($item['item_name']) ?></li>
-                    <?php endwhile; ?>
+                        <li>No items found for this order.</li>
+                    <?php endif; ?>
                 </ul>
 
+                <!-- Mark as Ready Button -->
                 <?php if ($view === 'active' && $row['status'] === 'in_kitchen'): ?>
                     <form method="POST">
                         <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
