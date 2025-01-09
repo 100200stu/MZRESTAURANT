@@ -142,6 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     createInfiniteCards();
 });
-
+function scrollToCategory(categoryId) {
+    const element = document.getElementById(categoryId);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
 
 
