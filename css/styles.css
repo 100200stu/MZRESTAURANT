@@ -55,7 +55,23 @@ header {
     object-fit: contain;
 }
 
-/* Navigation Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.hamburger .bar {
+    background-color: #ffc107;
+    height: 4px;
+    width: 100%;
+    border-radius: 2px;
+}
+
+/* Mobile Navbar */
 .nav-links {
     display: flex;
     gap: 30px;
@@ -71,9 +87,69 @@ header {
     transition: color 0.3s;
 }
 
-.nav-links a.active,
-.nav-links a:hover {
-    color: #ffffff;
+/* Mobile Styles: Hide Navigation Links and Show Hamburger Icon */
+@media screen and (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        background-color: #d1321b;
+        padding: 40px;
+        border-radius: 10px;
+        width: 450px;
+        overflow: hidden;
+        height: 0; /* Initially collapsed */
+        opacity: 0; /* Hide initially */
+        transition: height 0.5s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    /* Active state for the nav-links */
+    .nav-links.active {
+        height: auto; /* Expands to natural height */
+        opacity: 1; /* Fade-in effect */
+        padding-top: 20%; /* To give space from the top */
+        padding-bottom: 20%; /* To give space at the bottom */
+    }
+
+    .nav-links a {
+        font-size: 18px;
+        margin: 10px 0;
+        color: #fff;
+        transition: color 0.3s;
+        opacity: 0;
+        transform: translateY(10px); /* Start slightly down for smooth transition */
+        transition: all 0.3s ease;
+    }
+
+    .nav-links.active a {
+        opacity: 1;
+        transform: translateY(0); /* Move to original position */
+    }
+
+    /* Change color of the hamburger icon when clicked */
+    .hamburger.active .bar {
+        background-color: #ffffff;
+    }
+
+    /* Hamburger Icon Rotation (Cross Effect) */
+    .hamburger.active .bar:nth-child(1) {
+        transform: rotate(45deg);
+        transform-origin: top left;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: rotate(-45deg);
+        transform-origin: bottom left;
+    }
 }
 
 /* Hero Section */
