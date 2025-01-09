@@ -171,9 +171,10 @@ header {
 
 .carousel-track {
     display: flex;
-    transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease; /* Smooth snap animation */
     will-change: transform;
 }
+
 
 .carousel {
     overflow: hidden; /* Prevent showing overflowed cards */
