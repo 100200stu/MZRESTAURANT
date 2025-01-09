@@ -62,7 +62,7 @@ let prevTranslate = 0;
 let cardWidth = cards[0].offsetWidth + 20; // Card width plus gap
 let totalCards = cards.length;
 
-// Clone first and last card for infinite effect
+// Clone first and last cards for infinite effect
 const setupInfiniteLoop = () => {
     const firstCard = cards[0].cloneNode(true);
     const lastCard = cards[cards.length - 1].cloneNode(true);
@@ -70,7 +70,8 @@ const setupInfiniteLoop = () => {
     carouselTrack.appendChild(firstCard); // Clone first card to the end
     carouselTrack.insertBefore(lastCard, carouselTrack.firstChild); // Clone last card to the beginning
 
-    currentTranslate = -cardWidth; // Offset position to account for the cloned card
+    // Update total cards (including clones)
+    currentTranslate = -cardWidth; // Offset position for the first visible card
     carouselTrack.style.transform = `translateX(${currentTranslate}px)`;
 };
 
@@ -112,28 +113,29 @@ const dragEnd = () => {
     carouselTrack.style.transition = "transform 0.3s ease"; // Smooth snap
     carouselTrack.style.transform = `translateX(${currentTranslate}px)`;
 
-    handleInfiniteScroll();
+    carouselTrack.addEventListener('transitionend', handleInfiniteScroll);
 };
 
 // Handle infinite loop logic
 const handleInfiniteScroll = () => {
-    // Total cards include the cloned cards, so we adjust accordingly
-    const maxTranslate = -cardWidth * (totalCards);
-    const minTranslate = -cardWidth;
+    const totalTranslate = -cardWidth * totalCards; // Total distance for all real cards
+    const visibleStartTranslate = -cardWidth;
 
-    if (currentTranslate <= maxTranslate) {
+    if (currentTranslate <= totalTranslate) {
         // If at the end (last cloned card), jump to the first real card
-        currentTranslate = -cardWidth;
         carouselTrack.style.transition = "none"; // Remove animation for seamless jump
+        currentTranslate = visibleStartTranslate;
         carouselTrack.style.transform = `translateX(${currentTranslate}px)`;
     }
 
     if (currentTranslate >= 0) {
         // If at the beginning (first cloned card), jump to the last real card
-        currentTranslate = maxTranslate + cardWidth;
         carouselTrack.style.transition = "none"; // Remove animation for seamless jump
+        currentTranslate = totalTranslate;
         carouselTrack.style.transform = `translateX(${currentTranslate}px)`;
     }
+
+    carouselTrack.removeEventListener('transitionend', handleInfiniteScroll);
 };
 
 // Event listeners
