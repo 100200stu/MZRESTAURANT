@@ -65,6 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const carouselTrack = document.querySelector('.carousel-track');
+    if (!carouselTrack) {
+        console.warn('carousel-track element not found');
+        return; // Exit if carousel-track is not found
+    }
+
     const cards = Array.from(carouselTrack.children);
     const cardWidth = cards[0].offsetWidth + 20; // Card width plus gap
     let isDragging = false;
@@ -74,82 +79,68 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to create infinite cards by repeating the order
     const createInfiniteCards = () => {
-        // Duplicate the original set of cards for seamless scrolling
         const totalCards = cards.length * 3; // Triple the cards to allow seamless scrolling
-
-        // Append the duplicate cards to the carousel (just repeating the order)
         for (let i = 0; i < totalCards; i++) {
             const cardClone = cards[i % cards.length].cloneNode(true); // Repeat in the same order
             carouselTrack.appendChild(cardClone);
         }
 
-        // Set the width of the carousel to the new total width
         const carouselWidth = totalCards * cardWidth;
         carouselTrack.style.width = `${carouselWidth}px`;
     };
 
-    // Start dragging
     const dragStart = (event) => {
         isDragging = true;
         startX = getPositionX(event);
         prevTranslate = currentTranslate;
-        carouselTrack.style.transition = "none"; // Disable animation during dragging
+        carouselTrack.style.transition = "none";
     };
 
-    // Get current X position
     const getPositionX = (event) => {
         return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
     };
 
-    // While dragging
     const dragMove = (event) => {
-        if (!isDragging) return; // Stop if not dragging
+        if (!isDragging) return;
         const currentX = getPositionX(event);
         currentTranslate = prevTranslate + (currentX - startX);
         carouselTrack.style.transform = `translateX(${currentTranslate}px)`;
     };
 
-    // End dragging
     const dragEnd = () => {
         if (!isDragging) return;
         isDragging = false;
 
-        // Reset the translation value if the carousel overflows on the left or right
         if (currentTranslate > 0) {
-            currentTranslate = -(carouselTrack.offsetWidth / 3); // Start scrolling from the second set of cards
+            currentTranslate = -(carouselTrack.offsetWidth / 3);
         } else if (currentTranslate < -(carouselTrack.offsetWidth / 3) * 2) {
-            currentTranslate = -(carouselTrack.offsetWidth / 3); // Loop back to the second set of cards
+            currentTranslate = -(carouselTrack.offsetWidth / 3);
         }
 
-        carouselTrack.style.transition = "transform 0.3s ease"; // Smooth transition
+        carouselTrack.style.transition = "transform 0.3s ease";
         carouselTrack.style.transform = `translateX(${currentTranslate}px)`;
     };
 
-    // Reset dragging state on mouseup/touchend outside the carousel
     const resetDraggingState = () => {
         isDragging = false;
     };
 
-    // Event listeners for dragging
     carouselTrack.addEventListener('mousedown', (event) => {
         event.preventDefault();
         dragStart(event);
     });
 
     carouselTrack.addEventListener('mousemove', dragMove);
-
     carouselTrack.addEventListener('mouseup', dragEnd);
     carouselTrack.addEventListener('mouseleave', dragEnd);
-
     carouselTrack.addEventListener('touchstart', dragStart);
     carouselTrack.addEventListener('touchmove', dragMove);
     carouselTrack.addEventListener('touchend', dragEnd);
 
-    // Reset dragging state on mouseup/touchend outside the carousel
     document.addEventListener('mouseup', resetDraggingState);
     document.addEventListener('touchend', resetDraggingState);
 
-    // Initialize the infinite cards setup
     createInfiniteCards();
 });
+
 
