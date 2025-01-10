@@ -105,6 +105,7 @@ header {
         height: 0; /* Initially collapsed */
         opacity: 0; /* Hide initially */
         transition: height 0.5s ease-in-out, opacity 0.3s ease-in-out;
+        z-index: 1;
     }
 
     /* Active state for the nav-links */
@@ -441,4 +442,3 @@ header {
     margin-top: 20px;
     text-align: center;
 }
- 
