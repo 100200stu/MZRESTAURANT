@@ -15,9 +15,11 @@ if ($view === 'active') {
             ORDER BY o.created_at";
 } else {
     $sql = "SELECT o.id, o.customer_name, o.order_type, o.status, o.created_at, o.completed_at
-            FROM orders o
-            WHERE o.status = 'delivered'
-            ORDER BY o.completed_at DESC";
+        FROM orders o
+        WHERE o.status = 'delivered'
+        AND DATE(o.completed_at) = CURDATE()
+        ORDER BY o.completed_at DESC";
+
 }
 $result = $conn->query($sql);
 
@@ -46,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chef Dashboard</title>
+    <meta http-equiv="refresh" content="2">
     <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
