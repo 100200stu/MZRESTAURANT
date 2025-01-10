@@ -24,7 +24,7 @@
         <ul class="nav-links" id="nav-links">
             <li><a href="index.html" class="active">Home</a></li>
             <li><a href="PDF/menu.pdf" target="_blank">Menukaart</a></li>
-            <li><a href="../pages/bestellen.html">Bestellen</a></li>
+            <li><a href="php/bestellen.php">Bestellen</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
