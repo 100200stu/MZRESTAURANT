@@ -56,6 +56,12 @@ body {
     display: none;
 }
 
+.tab.active {
+    background-color: #d1321b;
+    color: white;
+}
+
+
 /* Buttons */
 .btn-primary, .btn-secondary {
     display: inline-block;
@@ -233,6 +239,38 @@ header {
 .menu-category {
     margin-top: 20px;
 }
+/* Stijl voor Add to Cart knop */
+.add-to-cart-btn {
+    background-color: #ffc107;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    margin-top: 15px;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+
+.add-to-cart-btn:active {
+    animation: pulse 0.2s;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 
 /* Winkelwagen Teller */
 .cart-counter {

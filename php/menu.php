@@ -27,6 +27,7 @@ $menu_items_result = $conn->query($menu_items_sql);
     <title>M&Z Restaurant</title>
     <link rel="stylesheet" href="../css/menu.css">
     <script src="../script/cart.js" defer></script>
+    <script src="../script/script.js" defer></script>
 </head>
 <body>
 <!-- Winkelwagen Teller -->
@@ -95,6 +96,7 @@ $menu_items_result = $conn->query($menu_items_sql);
 <main id="menu-section" class="hidden">
     <nav class="menu-tabs">
         <div class="menu-tabs-container">
+            <button class="tab" id="show-all" data-category="all">Alle Gerechten</button>
             <?php while ($category = $categories_result->fetch_assoc()): ?>
                 <button class="tab" data-category="<?= strtolower(str_replace(' ', '-', $category['name'])); ?>">
                     <?= $category['name']; ?>
@@ -127,50 +129,6 @@ $menu_items_result = $conn->query($menu_items_sql);
     <?php endwhile; ?>
 </main>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const step1 = document.getElementById('step-1');
-        const step2 = document.getElementById('step-2');
-        const popup = document.getElementById('delivery-pickup-popup');
-        const menuSection = document.getElementById('menu-section');
-        const pickupBtn = document.getElementById('pickup-btn');
-        const deliveryBtn = document.getElementById('delivery-btn');
-        const validatePostcode = document.getElementById('validate-postcode');
-        const postcodeInput = document.getElementById('postcode');
-        const messageContainer = document.getElementById('message-container');
-
-        let deliveryMethod = '';
-
-        // Stap 1: Kies bezorgen of afhalen
-        pickupBtn.addEventListener('click', () => {
-            deliveryMethod = 'pickup';
-            popup.classList.add('hidden'); // Popup verbergen
-            menuSection.classList.remove('hidden'); // Menu tonen
-        });
-
-        deliveryBtn.addEventListener('click', () => {
-            deliveryMethod = 'delivery';
-            step1.classList.add('hidden'); // Stap 1 verbergen
-            step2.classList.remove('hidden'); // Postcode-invoer tonen
-        });
-
-        // Stap 2: Postcode validatie
-        validatePostcode.addEventListener('click', () => {
-            const postcode = postcodeInput.value.trim().replace(/\s+/g, '');
-            const numericPart = parseInt(postcode.slice(0, 4));
-
-            if (/^[1-9][0-9]{3}[A-Za-z]{2}$/.test(postcode) && numericPart >= 2490 && numericPart <= 2599) {
-                popup.classList.add('hidden'); // Popup verbergen
-                menuSection.classList.remove('hidden'); // Menu tonen
-                alert(`Postcode geaccepteerd (${deliveryMethod}): ${postcode}`);
-            } else {
-                messageContainer.textContent = 'Voer een geldige postcode in Den Haag in.';
-                messageContainer.classList.remove('hidden');
-                messageContainer.classList.add('error');
-            }
-        });
-    });
-</script>
 
 </body>
 </html>
