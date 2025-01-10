@@ -7,17 +7,20 @@ if (isset($_GET['view']) && $_GET['view'] === 'previous') {
     $view = 'previous';
 }
 
-// Default date filter: Today
-$filter_date = date('Y-m-d'); // Today's date
-if (isset($_GET['filter_date'])) {
-    $filter_date = $_GET['filter_date']; // Use selected date
-}
-
-// Fetch active or previous orders
+// Fetch orders
 if ($view === 'active') {
-    $sql = "SELECT * FROM orders WHERE status NOT IN ('delivered') ORDER BY created_at";
+    $sql = "SELECT o.id, o.customer_name, o.customer_address, o.order_type, o.status, o.created_at
+            FROM orders o
+            WHERE (o.order_type = 'afhalen' AND o.status = 'ready_for_pickup') 
+               OR (o.order_type = 'bezorgen' AND o.status = 'ready_for_delivery')
+            ORDER BY o.created_at";
 } else {
-    $sql = "SELECT * FROM orders WHERE status = 'delivered' AND DATE(completed_at) = '$filter_date' ORDER BY completed_at DESC";
+    $sql = "SELECT o.id, o.customer_name, o.customer_address, o.order_type, o.status, o.created_at, o.completed_at
+            FROM orders o
+            WHERE (o.order_type = 'afhalen' AND o.status = 'picked_up') 
+               OR (o.order_type = 'bezorgen' AND o.status = 'delivered')
+            AND DATE(o.completed_at) = CURDATE()
+            ORDER BY o.completed_at DESC";
 }
 $result = $conn->query($sql);
 
@@ -33,20 +36,19 @@ function getOrderItems($conn, $order_id) {
 // Handle order status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'], $_POST['action'])) {
     $order_id = $_POST['order_id'];
-    $action = $_POST['action'];
-
-    if ($action === 'ready') {
-        $update_sql = "UPDATE orders SET status = 'ready_for_delivery' WHERE id = $order_id";
-    } elseif ($action === 'assign') {
+    if ($_POST['action'] === 'pickup') {
+        $update_sql = "UPDATE orders SET status = 'picked_up', completed_at = NOW() WHERE id = $order_id";
+    } elseif ($_POST['action'] === 'delivery') {
         $update_sql = "UPDATE orders SET status = 'out_for_delivery' WHERE id = $order_id";
-    } elseif ($action === 'deliver') {
-        $update_sql = "UPDATE orders SET status = 'delivered', completed_at = NOW() WHERE id = $order_id";
     }
     $conn->query($update_sql);
-    header("Location: manager.php"); // Refresh the page
+    header("Location: manager.php?view=active");
     exit;
 }
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'], $_POST['a
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager Dashboard</title>
-    <meta http-equiv="refresh" content="2">
     <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
@@ -65,16 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'], $_POST['a
     <a href="manager.php?view=active" class="<?= $view === 'active' ? 'active' : '' ?>">Active Orders</a>
     <a href="manager.php?view=previous" class="<?= $view === 'previous' ? 'active' : '' ?>">Previous Orders</a>
 </div>
-
-<?php if ($view === 'previous'): ?>
-    <!-- Date Filter -->
-    <form method="GET" class="date-filter">
-        <input type="hidden" name="view" value="previous">
-        <label for="filter_date">Filter by Date:</label>
-        <input type="date" id="filter_date" name="filter_date" value="<?= htmlspecialchars($filter_date) ?>">
-        <button type="submit">Filter</button>
-    </form>
-<?php endif; ?>
 
 <?php if ($result && $result->num_rows > 0): ?>
     <div class="order-container">
@@ -100,24 +91,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'], $_POST['a
                     <?php endwhile; ?>
                 </ul>
 
-                <!-- Status Update Buttons -->
-                <?php if ($row['status'] === 'in_kitchen'): ?>
+                <!-- Buttons Based on Order Type -->
+                <?php if ($row['order_type'] === 'afhalen' && $row['status'] === 'ready_for_pickup'): ?>
                     <form method="POST">
                         <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
-                        <input type="hidden" name="action" value="ready">
-                        <button type="submit">Order Ready</button>
+                        <input type="hidden" name="action" value="pick_up">
+                        <button type="submit">Mark as Picked Up</button>
                     </form>
-                <?php elseif ($row['status'] === 'ready_for_delivery'): ?>
-                    <form method="POST">
-                        <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
-                        <input type="hidden" name="action" value="assign">
-                        <button type="submit">Ready for Delivery</button>
-                    </form>
-                <?php elseif ($row['status'] === 'out_for_delivery'): ?>
+                <?php elseif ($row['order_type'] === 'bezorgen' && $row['status'] === 'ready_for_delivery'): ?>
                     <form method="POST">
                         <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
                         <input type="hidden" name="action" value="deliver">
-                        <button type="submit">Delivered</button>
+                        <button type="submit">Ready for Delivery</button>
                     </form>
                 <?php endif; ?>
 
@@ -129,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'], $_POST['a
     </div>
 <?php else: ?>
     <div class="message">
-        <?= $view === 'active' ? 'No active orders.' : 'No previous orders for the selected date.' ?>
+        <?= $view === 'active' ? 'No active orders.' : 'No previous orders for today.' ?>
     </div>
 <?php endif; ?>
 </body>
