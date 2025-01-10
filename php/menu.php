@@ -27,12 +27,33 @@ $menu_items_result = $conn->query($menu_items_sql);
     <title>M&Z Restaurant</title>
     <link rel="stylesheet" href="../css/menu.css">
     <script src="../script/cart.js" defer></script>
-    <script src="../script/script.js" defer></script>
 </head>
 <body>
 <!-- Winkelwagen Teller -->
 <div class="cart-counter">
-    <span id="cart-count">0</span>
+    <span id="cart-count"><?= $total_items; ?></span>
+</div>
+
+<!-- Winkelwagen -->
+<div id="cart" class="cart hidden">
+    <h2>Winkelwagen</h2>
+    <div id="cart-items">
+        <?php if ($cart_items): ?>
+            <?php foreach ($cart_items as $item): ?>
+                <div class="cart-item">
+                    <p><?= htmlspecialchars($item['name']); ?> (x<?= $item['quantity']; ?>)</p>
+                    <p>€<?= number_format($item['price'] * $item['quantity'], 2); ?></p>
+                </div>
+                <?php $total_price += $item['price'] * $item['quantity']; ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>De winkelwagen is leeg.</p>
+        <?php endif; ?>
+    </div>
+    <div class="cart-summary">
+        <p>Totaal: <span id="cart-total">€<?= number_format($total_price, 2); ?></span></p>
+        <button id="checkout-btn">Afrekenen</button>
+    </div>
 </div>
 
 <!-- Header Section -->
@@ -41,13 +62,8 @@ $menu_items_result = $conn->query($menu_items_sql);
         <div class="logo">
             <img src="../images/Blue and White Circle Surfing Club Logo.png" alt="M&Z Logo">
         </div>
-        <div class="burger-menu" id="burger-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="nav-links" id="nav-links">
-            <li><a href="#home" class="active">Home</a></li>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
             <li><a href="PDF/menu.pdf" target="_blank">Menukaart</a></li>
             <li><a href="bestellen.php">Bestellen</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -75,23 +91,22 @@ $menu_items_result = $conn->query($menu_items_sql);
     </div>
 </div>
 
-<!-- Category Tabs -->
-<nav class="menu-tabs">
-    <div class="menu-tabs-container">
-        <?php while ($category = $categories_result->fetch_assoc()): ?>
-            <button class="tab" data-category="<?= strtolower(str_replace(' ', '-', $category['name'])); ?>">
-                <?= $category['name']; ?>
-            </button>
-        <?php endwhile; ?>
-    </div>
-</nav>
+<!-- Menu Sectie -->
+<main id="menu-section" class="hidden">
+    <nav class="menu-tabs">
+        <div class="menu-tabs-container">
+            <?php while ($category = $categories_result->fetch_assoc()): ?>
+                <button class="tab" data-category="<?= strtolower(str_replace(' ', '-', $category['name'])); ?>">
+                    <?= $category['name']; ?>
+                </button>
+            <?php endwhile; ?>
+        </div>
+    </nav>
 
-<!-- Menu Section -->
-<main>
     <?php
     $categories_result->data_seek(0); // Reset pointer
     while ($category = $categories_result->fetch_assoc()): ?>
-        <section id="<?= strtolower(str_replace(' ', '-', $category['name'])); ?>">
+        <section id="<?= strtolower(str_replace(' ', '-', $category['name'])); ?>" class="menu-category">
             <h2><?= $category['name']; ?></h2>
             <div class="menu-items">
                 <?php
@@ -103,7 +118,7 @@ $menu_items_result = $conn->query($menu_items_sql);
                             <h3><?= $item['name']; ?></h3>
                             <p><?= $item['description']; ?></p>
                             <p class="price">€<?= number_format($item['price'], 2); ?></p>
-                            <button class="add-to-cart-btn" data-id="<?= $item['id']; ?>">Add to Cart</button>
+                            <button class="add-to-cart-btn" data-id="<?= $item['id']; ?>" data-name="<?= $item['name']; ?>" data-price="<?= $item['price']; ?>">Add to Cart</button>
                         </div>
                     <?php endif;
                 endwhile; ?>
@@ -112,56 +127,50 @@ $menu_items_result = $conn->query($menu_items_sql);
     <?php endwhile; ?>
 </main>
 
-<!-- Winkelwagen Sectie -->
-<div id="cart" class="cart hidden">
-    <h2>Winkelwagen</h2>
-    <div id="cart-items">
-        <p>De winkelwagen is leeg.</p>
-    </div>
-    <div class="cart-summary">
-        <p>Totaal: <span id="cart-total">€0.00</span></p>
-        <a href="checkout.php" id="checkout-btn">Afrekenen</a>
-    </div>
-</div>
-
 <script>
-    // Popup workflow
     document.addEventListener('DOMContentLoaded', () => {
         const step1 = document.getElementById('step-1');
         const step2 = document.getElementById('step-2');
         const popup = document.getElementById('delivery-pickup-popup');
+        const menuSection = document.getElementById('menu-section');
         const pickupBtn = document.getElementById('pickup-btn');
         const deliveryBtn = document.getElementById('delivery-btn');
         const validatePostcode = document.getElementById('validate-postcode');
         const postcodeInput = document.getElementById('postcode');
         const messageContainer = document.getElementById('message-container');
 
+        let deliveryMethod = '';
+
         // Stap 1: Kies bezorgen of afhalen
         pickupBtn.addEventListener('click', () => {
-            step1.classList.add('hidden');
-            step2.classList.remove('hidden');
+            deliveryMethod = 'pickup';
+            popup.classList.add('hidden'); // Popup verbergen
+            menuSection.classList.remove('hidden'); // Menu tonen
         });
 
         deliveryBtn.addEventListener('click', () => {
-            step1.classList.add('hidden');
-            step2.classList.remove('hidden');
+            deliveryMethod = 'delivery';
+            step1.classList.add('hidden'); // Stap 1 verbergen
+            step2.classList.remove('hidden'); // Postcode-invoer tonen
         });
 
-        // Stap 2: Valideer postcode
+        // Stap 2: Postcode validatie
         validatePostcode.addEventListener('click', () => {
-            const postcode = postcodeInput.value.trim();
+            const postcode = postcodeInput.value.trim().replace(/\s+/g, '');
+            const numericPart = parseInt(postcode.slice(0, 4));
 
-            if (/^[1-9][0-9]{3}\s?[A-Za-z]{2}$/.test(postcode)) {
-                popup.classList.add('hidden');
-                alert('Postcode geaccepteerd!');
-                // Je kunt de postcode opslaan in een sessie of doorsturen naar de server
+            if (/^[1-9][0-9]{3}[A-Za-z]{2}$/.test(postcode) && numericPart >= 2490 && numericPart <= 2599) {
+                popup.classList.add('hidden'); // Popup verbergen
+                menuSection.classList.remove('hidden'); // Menu tonen
+                alert(`Postcode geaccepteerd (${deliveryMethod}): ${postcode}`);
             } else {
-                messageContainer.textContent = 'Voer een geldige Nederlandse postcode in.';
+                messageContainer.textContent = 'Voer een geldige postcode in Den Haag in.';
                 messageContainer.classList.remove('hidden');
                 messageContainer.classList.add('error');
             }
         });
     });
 </script>
+
 </body>
 </html>
