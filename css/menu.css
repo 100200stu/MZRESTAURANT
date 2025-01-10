@@ -450,7 +450,7 @@ header {
     padding: 10px 0;
     position: sticky; /* Tabs blijven bovenaan bij scrollen */
     top: 60px;
-    z-index: 999;
+    z-index: 10000;
     -ms-overflow-style: none; /* Verberg scrollbalk in IE */
     scrollbar-width: none; /* Verberg scrollbalk in Firefox */
 }
