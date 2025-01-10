@@ -7,19 +7,19 @@ if (isset($_GET['view']) && $_GET['view'] === 'previous') {
     $view = 'previous';
 }
 
-// Fetch active or previous orders
+// Fetch orders
 if ($view === 'active') {
     $sql = "SELECT o.id, o.customer_name, o.order_type, o.status, o.created_at
             FROM orders o
-            WHERE o.status IN ('pending', 'in_kitchen')
+            WHERE o.status = 'in_kitchen'
             ORDER BY o.created_at";
 } else {
     $sql = "SELECT o.id, o.customer_name, o.order_type, o.status, o.created_at, o.completed_at
-        FROM orders o
-        WHERE o.status = 'delivered'
-        AND DATE(o.completed_at) = CURDATE()
-        ORDER BY o.completed_at DESC";
-
+            FROM orders o
+            WHERE (o.order_type = 'afhalen' AND o.status = 'picked_up') 
+               OR (o.order_type = 'bezorgen' AND o.status = 'delivered')
+            AND DATE(o.completed_at) = CURDATE()
+            ORDER BY o.completed_at DESC";
 }
 $result = $conn->query($sql);
 
@@ -35,9 +35,15 @@ function getOrderItems($conn, $order_id) {
 // Handle order status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
     $order_id = $_POST['order_id'];
-    $update_sql = "UPDATE orders SET status = 'ready_for_delivery' WHERE id = $order_id";
+    $order_type = $_POST['order_type'];
+
+    if ($order_type === 'afhalen') {
+        $update_sql = "UPDATE orders SET status = 'ready_for_pickup' WHERE id = $order_id";
+    } elseif ($order_type === 'bezorgen') {
+        $update_sql = "UPDATE orders SET status = 'ready_for_delivery' WHERE id = $order_id";
+    }
     $conn->query($update_sql);
-    header("Location: chef.php?view=active"); // Refresh the page
+    header("Location: chef.php?view=active");
     exit;
 }
 ?>
@@ -48,18 +54,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chef Dashboard</title>
-    <meta http-equiv="refresh" content="2">
     <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
 <h1>Chef Dashboard</h1>
-
-<!-- Toggle between Active and Previous Orders -->
 <div class="order-toggle">
     <a href="chef.php?view=active" class="<?= $view === 'active' ? 'active' : '' ?>">Active Orders</a>
     <a href="chef.php?view=previous" class="<?= $view === 'previous' ? 'active' : '' ?>">Previous Orders</a>
 </div>
-
 <?php if ($result && $result->num_rows > 0): ?>
     <div class="order-container">
         <?php while ($row = $result->fetch_assoc()): ?>
@@ -69,42 +71,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
                 <p><strong>Type:</strong> <?= ucfirst(htmlspecialchars($row['order_type'])) ?></p>
                 <p><strong>Status:</strong> <?= ucfirst(htmlspecialchars($row['status'])) ?></p>
                 <p><strong>Placed At:</strong> <?= htmlspecialchars($row['created_at']) ?></p>
-
-                <!-- Order Items -->
                 <h3>Order Details:</h3>
                 <ul>
                     <?php
                     $items_result = getOrderItems($conn, $row['id']);
-                    if ($items_result && $items_result->num_rows > 0):
-                        while ($item = $items_result->fetch_assoc()):
-                            ?>
-                            <li><?= $item['quantity'] ?> x <?= htmlspecialchars($item['item_name']) ?></li>
-                        <?php
-                        endwhile;
-                    else:
+                    while ($item = $items_result->fetch_assoc()):
                         ?>
-                        <li>No items found for this order.</li>
-                    <?php endif; ?>
+                        <li><?= $item['quantity'] ?> x <?= htmlspecialchars($item['item_name']) ?></li>
+                    <?php endwhile; ?>
                 </ul>
-
-                <!-- Mark as Ready Button -->
-                <?php if ($view === 'active' && $row['status'] === 'in_kitchen'): ?>
-                    <form method="POST">
-                        <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
-                        <button type="submit">Mark as Ready</button>
-                    </form>
-                <?php endif; ?>
-
-                <?php if ($view === 'previous'): ?>
-                    <p><strong>Completed At:</strong> <?= htmlspecialchars($row['completed_at']) ?></p>
-                <?php endif; ?>
+                <form method="POST">
+                    <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
+                    <input type="hidden" name="order_type" value="<?= $row['order_type'] ?>">
+                    <button type="submit">Mark as Ready</button>
+                </form>
             </div>
         <?php endwhile; ?>
     </div>
 <?php else: ?>
-    <div class="message">
-        <?= $view === 'active' ? 'No active orders.' : 'No previous orders.' ?>
-    </div>
+    <div class="message"><?= $view === 'active' ? 'No active orders.' : 'No previous orders.' ?></div>
 <?php endif; ?>
 </body>
 </html>
