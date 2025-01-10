@@ -28,7 +28,7 @@ $menu_items_result = $conn->query($menu_items_sql);
     <link rel="stylesheet" href="../css/menu.css">
     <link rel="stylesheet" href="../css/styles.css">
     <script src="../script/cart.js" defer></script>
-    <script src="../script/script.js" defer></script>
+
 </head>
 <body>
 <!-- Winkelwagen Teller -->
