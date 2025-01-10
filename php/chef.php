@@ -15,28 +15,30 @@ if ($view === 'active') {
             ORDER BY o.created_at";
 } else {
     $sql = "SELECT o.id, o.customer_name, o.order_type, o.status, o.created_at, o.completed_at
-        FROM orders o
-        WHERE o.status = 'delivered'
-        AND DATE(o.completed_at) = CURDATE()
-        ORDER BY o.completed_at DESC";
-
+            FROM orders o
+            WHERE o.status = 'delivered'
+            AND DATE(o.completed_at) = CURDATE()
+            ORDER BY o.completed_at DESC";
 }
 $result = $conn->query($sql);
 
 // Fetch order items for each order
 function getOrderItems($conn, $order_id) {
-    $items_sql = "SELECT mi.name AS item_name, oi.quantity 
-                  FROM order_items oi 
-                  JOIN menu_items mi ON oi.menu_item_id = mi.id 
-                  WHERE oi.order_id = $order_id";
-    return $conn->query($items_sql);
+    $stmt = $conn->prepare("SELECT mi.name AS item_name, oi.quantity 
+                            FROM order_items oi 
+                            JOIN menu_items mi ON oi.menu_item_id = mi.id 
+                            WHERE oi.order_id = ?");
+    $stmt->bind_param("i", $order_id);
+    $stmt->execute();
+    return $stmt->get_result();
 }
 
 // Handle order status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
-    $order_id = $_POST['order_id'];
-    $update_sql = "UPDATE orders SET status = 'ready_for_delivery' WHERE id = $order_id";
-    $conn->query($update_sql);
+    $order_id = intval($_POST['order_id']); // Ensure $order_id is an integer
+    $stmt = $conn->prepare("UPDATE orders SET status = 'ready_for_delivery' WHERE id = ?");
+    $stmt->bind_param("i", $order_id);
+    $stmt->execute();
     header("Location: chef.php?view=active"); // Refresh the page
     exit;
 }
@@ -90,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
                 <!-- Mark as Ready Button -->
                 <?php if ($view === 'active' && $row['status'] === 'in_kitchen'): ?>
                     <form method="POST">
-                        <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
+                        <input type="hidden" name="order_id" value="<?= htmlspecialchars($row['id']) ?>">
                         <button type="submit">Mark as Ready</button>
                     </form>
                 <?php endif; ?>

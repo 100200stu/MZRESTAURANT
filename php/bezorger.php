@@ -12,19 +12,19 @@ if ($view === 'active') {
     $sql = "SELECT * FROM orders WHERE status = 'out_for_delivery' ORDER BY created_at";
 } else {
     $sql = "SELECT * FROM orders 
-        WHERE status = 'delivered' 
-        AND DATE(completed_at) = CURDATE() 
-        ORDER BY completed_at DESC";
-
+            WHERE status = 'delivered' 
+            AND DATE(completed_at) = CURDATE() 
+            ORDER BY completed_at DESC";
 }
 $result = $conn->query($sql);
 
 // Handle order status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
-    $order_id = $_POST['order_id'];
-    $update_sql = "UPDATE orders SET status = 'delivered', completed_at = NOW() WHERE id = $order_id";
-    $conn->query($update_sql);
-    header("Location: bezorger.php?view=active");
+    $order_id = intval($_POST['order_id']); // Ensure $order_id is an integer
+    $stmt = $conn->prepare("UPDATE orders SET status = 'delivered', completed_at = NOW() WHERE id = ?");
+    $stmt->bind_param("i", $order_id);
+    $stmt->execute();
+    header("Location: bezorger.php?view=active"); // Redirect to active orders
     exit;
 }
 ?>
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
                 <?php if ($view === 'active'): ?>
                     <!-- Update Status Button -->
                     <form method="POST">
-                        <input type="hidden" name="order_id" value="<?= $row['id'] ?>">
+                        <input type="hidden" name="order_id" value="<?= htmlspecialchars($row['id']) ?>">
                         <button type="submit">Mark as Delivered</button>
                     </form>
                 <?php endif; ?>
