@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -55,10 +57,21 @@ $menu_items_result = $conn->query($menu_items_sql);
 
 <!-- Popup voor Bezorging of Afhalen -->
 <div id="delivery-pickup-popup" class="popup">
-    <div class="popup-content">
+    <div class="popup-content" id="step-1">
         <h2>Kies een optie</h2>
         <button class="btn-primary" id="pickup-btn">Afhalen</button>
         <button class="btn-secondary" id="delivery-btn">Bezorging</button>
+    </div>
+
+    <!-- Postcode invoeren -->
+    <div class="popup-content hidden" id="step-2">
+        <h2>Voer uw postcode in</h2>
+        <div class="input-container">
+            <input type="text" id="postcode" placeholder=" " class="modern-input">
+            <label for="postcode" class="modern-label">Postcode</label>
+        </div>
+        <div id="message-container" class="hidden"></div>
+        <button class="btn-primary" id="validate-postcode">Ga Verder</button>
     </div>
 </div>
 
@@ -112,22 +125,41 @@ $menu_items_result = $conn->query($menu_items_sql);
 </div>
 
 <script>
-    // Functie om popup te tonen
+    // Popup workflow
     document.addEventListener('DOMContentLoaded', () => {
+        const step1 = document.getElementById('step-1');
+        const step2 = document.getElementById('step-2');
         const popup = document.getElementById('delivery-pickup-popup');
         const pickupBtn = document.getElementById('pickup-btn');
         const deliveryBtn = document.getElementById('delivery-btn');
+        const validatePostcode = document.getElementById('validate-postcode');
+        const postcodeInput = document.getElementById('postcode');
+        const messageContainer = document.getElementById('message-container');
 
-        popup.classList.remove('hidden');
-
+        // Stap 1: Kies bezorgen of afhalen
         pickupBtn.addEventListener('click', () => {
-            popup.classList.add('hidden');
-            alert('Je hebt gekozen voor Afhalen');
+            step1.classList.add('hidden');
+            step2.classList.remove('hidden');
         });
 
         deliveryBtn.addEventListener('click', () => {
-            popup.classList.add('hidden');
-            alert('Je hebt gekozen voor Bezorging');
+            step1.classList.add('hidden');
+            step2.classList.remove('hidden');
+        });
+
+        // Stap 2: Valideer postcode
+        validatePostcode.addEventListener('click', () => {
+            const postcode = postcodeInput.value.trim();
+
+            if (/^[1-9][0-9]{3}\s?[A-Za-z]{2}$/.test(postcode)) {
+                popup.classList.add('hidden');
+                alert('Postcode geaccepteerd!');
+                // Je kunt de postcode opslaan in een sessie of doorsturen naar de server
+            } else {
+                messageContainer.textContent = 'Voer een geldige Nederlandse postcode in.';
+                messageContainer.classList.remove('hidden');
+                messageContainer.classList.add('error');
+            }
         });
     });
 </script>
