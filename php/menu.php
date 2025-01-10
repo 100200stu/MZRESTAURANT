@@ -26,6 +26,7 @@ $menu_items_result = $conn->query($menu_items_sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M&Z Restaurant</title>
     <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/styles.css">
     <script src="../script/cart.js" defer></script>
     <script src="../script/script.js" defer></script>
 </head>
@@ -57,16 +58,22 @@ $menu_items_result = $conn->query($menu_items_sql);
     </div>
 </div>
 
-<!-- Header Section -->
 <header>
     <nav class="navbar">
         <div class="logo">
             <img src="../images/Blue and White Circle Surfing Club Logo.png" alt="M&Z Logo">
         </div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
+        <!-- Hamburger Icon -->
+        <div class="hamburger" id="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <!-- Navigation Links -->
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
             <li><a href="PDF/menu.pdf" target="_blank">Menukaart</a></li>
-            <li><a href="bestellen.php">Bestellen</a></li>
+            <li><a href="php/menu.php">Bestellen</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
