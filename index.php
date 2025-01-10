@@ -34,9 +34,10 @@
 <!-- Hero Section -->
 <section class="hero">
     <video autoplay loop muted class="hero-video">
-        <source src="videos/IMG_2096.mov" type="video/mp4">
+        <source src="https://100880.stu.sd-lab.nl/mzsnackbar/videos/IMG_2096.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+
     <div class="hero-content">
         <h1>Welkom bij <br> M&Z Restaurant</h1>
         <div class="hero-buttons">

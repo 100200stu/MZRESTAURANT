@@ -73,7 +73,6 @@ header {
 /* Mobile Navbar */
 .nav-links {
     display: flex;
-    gap: 30px;
     list-style: none;
     margin-left: auto;
 }
@@ -98,9 +97,9 @@ header {
         position: absolute;
         top: 80px;
         background-color: #d1321b;
-        padding: 40px;
+        padding: 20px;  /* Reduced padding to make it tighter */
         border-radius: 10px;
-        width: 450px;
+        width: 100%; /* Set to 100% width of the screen */
         overflow: hidden;
         height: 0; /* Initially collapsed */
         opacity: 0; /* Hide initially */
@@ -112,13 +111,13 @@ header {
     .nav-links.active {
         height: auto; /* Expands to natural height */
         opacity: 1; /* Fade-in effect */
-        padding-top: 20%; /* To give space from the top */
-        padding-bottom: 20%; /* To give space at the bottom */
+        padding-top: 20px; /* Reduced space from the top */
+        padding-bottom: 20px; /* Reduced space at the bottom */
     }
 
     .nav-links a {
         font-size: 18px;
-        margin: 10px 0;
+        margin: 8px 0;  /* Reduced margin to make links tighter */
         color: #fff;
         transition: color 0.3s;
         opacity: 0;
@@ -151,6 +150,7 @@ header {
         transform-origin: bottom left;
     }
 }
+
 
 /* Hero Section */
 .hero {
@@ -442,10 +442,3 @@ header {
     margin-top: 20px;
     text-align: center;
 }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
- 
->>>>>>> 2c3378a4e9c157edbafaed743c2426a9559ff65c
->>>>>>> c649699e40331033d6ee93376edf74af1661c4d3
