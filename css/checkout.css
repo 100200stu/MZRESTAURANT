@@ -1,48 +1,90 @@
-
+/* Algemene styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
 
 header {
     background-color: #d1321b;
     color: white;
-    padding: 20px;
     text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
 main {
-    max-width: 600px;
-    margin: 20px auto;
-    background: white;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+h1, h2, h3 {
+    font-family: 'MyFont', sans-serif;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table thead {
+    background-color: #d1321b;
+    color: white;
+}
+
+table th, table td {
+    text-align: left;
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #ffe6e6;
 }
 
 label {
     font-size: 16px;
-    color: #333;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
 }
 
-input, textarea, select, button {
-    font-size: 16px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+input[type="text"] {
     width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
 }
 
 button {
     background-color: #d1321b;
     color: white;
+    padding: 10px 20px;
     border: none;
+    border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 button:hover {
     background-color: #a12615;
+}
+
+form {
+    margin-bottom: 20px;
 }
