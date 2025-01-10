@@ -408,25 +408,22 @@ header {
     .nav-links {
         display: flex;
         flex-direction: column;
-        position: absolute;
-        top: 80px;
+        position: relative; /* Change to relative for expansion */
+        top: 0; /* Remove absolute positioning */
         background-color: #d1321b;
-        padding: 40px;
-        border-radius: 10px;
-        width: 100%; /* Ensure full width */
-        max-width: 450px;
-        overflow: hidden;
-        height: 0; /* Initially collapsed */
+        padding: 0;
+        border-radius: 0;
+        width: 100%; /* Full width for expansion */
+        overflow: hidden; /* Hide content before expanding */
+        max-height: 0; /* Collapse the height initially */
         opacity: 0; /* Hide initially */
-        transition: height 0.5s ease-in-out, opacity 0.3s ease-in-out;
+        transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out;
     }
 
     /* Active state for the nav-links */
     .nav-links.active {
-        height: auto; /* Expands to natural height */
+        max-height: 500px; /* Arbitrary high value for expansion */
         opacity: 1; /* Fade-in effect */
-        padding-top: 20%; /* To give space from the top */
-        padding-bottom: 20%; /* To give space at the bottom */
     }
 
     .nav-links a {
@@ -443,27 +440,8 @@ header {
         opacity: 1;
         transform: translateY(0); /* Move to original position */
     }
-
-    /* Change color of the hamburger icon when clicked */
-    .hamburger.active .bar {
-        background-color: #ffffff;
-    }
-
-    /* Hamburger Icon Rotation (Cross Effect) */
-    .hamburger.active .bar:nth-child(1) {
-        transform: rotate(45deg);
-        transform-origin: top left;
-    }
-
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-    }
-
-    .hamburger.active .bar:nth-child(3) {
-        transform: rotate(-45deg);
-        transform-origin: bottom left;
-    }
 }
+
 
 /* Hero Section */
 .hero {

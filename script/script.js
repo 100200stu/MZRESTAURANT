@@ -3,10 +3,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.getElementById('nav-links');
 
     hamburger.addEventListener('click', () => {
+        const isActive = navLinks.classList.contains('active');
+        if (isActive) {
+            navLinks.style.maxHeight = null; // Collapse
+        } else {
+            navLinks.style.maxHeight = navLinks.scrollHeight + 'px'; // Expand
+        }
         navLinks.classList.toggle('active');
         hamburger.classList.toggle('active');
     });
 });
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const step1 = document.getElementById('step-1');
