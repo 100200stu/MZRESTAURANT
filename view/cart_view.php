@@ -45,7 +45,7 @@ $total_price = 0;
                 <td><?= $row['quantity']; ?></td>
                 <td>€<?= number_format($row['price'] * $row['quantity'], 2); ?></td>
                 <td>
-                    <form method="POST" action="../php/cart.php">
+                    <form method="POST" action="cart.php">
                         <input type="hidden" name="menu_item_id" value="<?= $row['menu_item_id']; ?>">
                         <input type="hidden" name="action" value="remove">
                         <button type="submit">Verwijderen</button>
@@ -56,7 +56,7 @@ $total_price = 0;
         </tbody>
     </table>
     <h3>Totaal: €<?= number_format($total_price, 2); ?></h3>
-    <form method="POST" action="checkout.php">
+    <form method="POST" action="../php/checkout.php">
         <button type="submit">Afrekenen</button>
     </form>
 <?php else: ?>

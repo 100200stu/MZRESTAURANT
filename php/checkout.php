@@ -53,14 +53,14 @@ $total_with_btw = $total + $btw;
     <h3>Totaal: €<?= number_format($total_with_btw, 2); ?></h3>
 
     <!-- Voucher code -->
-    <form action="process_voucher.php" method="POST" id="voucher-form">
+    <form action="../view/process_voucher.php" method="POST" id="voucher-form">
         <label for="voucher">Voucher code:</label>
         <input type="text" id="voucher" name="voucher">
         <button type="submit">Pas Voucher Toe</button>
     </form>
 
     <!-- Naar gegevens invullen -->
-    <form action="fill_details.php" method="GET">
+    <form action="../view/fill_details.php" method="GET">
         <button type="submit">Volgende Stap</button>
     </form>
 </main>
