@@ -4,6 +4,13 @@ session_start();
 // Haal de winkelwagen uit de sessie
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 
+// Check if cart is empty
+if (empty($cart)) {
+    echo "<h1>Je winkelwagen is leeg.</h1>";
+    echo "<p>Je moet eerst producten toevoegen aan je winkelwagen voordat je kunt afrekenen.</p>";
+    exit;
+}
+
 // Bereken totaal en BTW
 $total = 0;
 foreach ($cart as $item) {
@@ -61,7 +68,7 @@ $total_with_btw = $total + $btw;
     </form>
 
     <!-- Naar gegevens invullen -->
-    <form action="../view/fill_details.php" method="GET">
+    <form action="../view/fill_details.php" method="POST">
         <button type="submit">Volgende Stap</button>
     </form>
 </main>
