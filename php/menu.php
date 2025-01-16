@@ -1,13 +1,15 @@
 <?php
-global $conn;
 session_start();
+include '../php/config.php'; // Include the database configuration
 
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Include the database configuration
-include('../php/config.php');
+// Check if the order method is passed and valid
+if (isset($_GET['method']) && in_array($_GET['method'], ['pickup', 'delivery'])) {
+    $_SESSION['order_method'] = $_GET['method']; // Store the method in the session
+} elseif (!isset($_SESSION['order_method'])) {
+    // If no method is set, redirect to the bestellen page
+    header('Location: bestellen.php');
+    exit;
+}
 
 // Fetch categories
 $categories_sql = "SELECT * FROM categories";
@@ -18,7 +20,48 @@ $menu_items_sql = "SELECT menu_items.id, menu_items.name, menu_items.description
                    FROM menu_items 
                    JOIN categories ON menu_items.category_id = categories.id";
 $menu_items_result = $conn->query($menu_items_sql);
+
+// Initialize cart if not already set
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Add item to cart logic
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['menu_item_id'], $_POST['quantity'])) {
+    $menu_item_id = intval($_POST['menu_item_id']);
+    $quantity = intval($_POST['quantity']);
+
+    // Validate input
+    if ($quantity > 0) {
+        // Check if the item already exists in the cart
+        if (isset($_SESSION['cart'][$menu_item_id])) {
+            $_SESSION['cart'][$menu_item_id]['quantity'] += $quantity; // Increment quantity
+        } else {
+            // Fetch item details from the database
+            $item_sql = "SELECT id, name, price FROM menu_items WHERE id = ?";
+            $stmt = $conn->prepare($item_sql);
+            $stmt->bind_param('i', $menu_item_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $item = $result->fetch_assoc();
+                $_SESSION['cart'][$menu_item_id] = [
+                    'id' => $item['id'],
+                    'name' => $item['name'],  
+                    'price' => $item['price'],
+                    'quantity' => $quantity,
+                ];
+            }
+        }
+    }
+    // Redirect to avoid form resubmission
+    header('Location: menu.php');
+    exit;
+}
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
