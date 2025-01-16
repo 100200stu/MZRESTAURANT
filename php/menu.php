@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['menu_item_id'], $_POS
                 $item = $result->fetch_assoc();
                 $_SESSION['cart'][$menu_item_id] = [
                     'id' => $item['id'],
-                    'name' => $item['name'],  
+                    'name' => $item['name'],
                     'price' => $item['price'],
                     'quantity' => $quantity,
                 ];
