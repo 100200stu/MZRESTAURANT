@@ -10,6 +10,11 @@
 <body>
 <header>
     <h1>Vul jouw gegevens in</h1>
+    <div class="back-arrow">
+        <a href="javascript:history.back()">
+            <img src="../images/back-arrow.png" alt="Back" style="width: 30px; height: auto;">
+        </a>
+    </div>
 </header>
 <main>
     <form action="submit_order.php" method="POST">
