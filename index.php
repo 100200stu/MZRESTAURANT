@@ -24,7 +24,7 @@
         <ul class="nav-links" id="nav-links">
             <li><a href="index.html" class="active">Home</a></li>
             <li><a href="PDF/menu.pdf" target="_blank">Menukaart</a></li>
-            <li><a href="php/menu.php">Bestellen</a></li>
+            <li><a href="php/menu.php">Bestel</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
@@ -41,7 +41,7 @@
     <div class="hero-content">
         <h1>Welkom bij <br> M&Z Restaurant</h1>
         <div class="hero-buttons">
-            <a href="#order" class="btn btn-primary">Bestellen</a>
+            <a href="php/menu.php" class="btn btn-primary">Bestellen</a>
             <a href="PDF/menu.pdf" target="_blank" class="btn btn-secondary">Menu</a> <!-- Updated to open PDF -->
         </div>
     </div>
