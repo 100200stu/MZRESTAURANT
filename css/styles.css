@@ -99,7 +99,7 @@ header {
         background-color: #d1321b;
         padding: 20px;  /* Reduced padding to make it tighter */
         border-radius: 10px;
-        width: 100%; /* Set to 100% width of the screen */
+        width: 80%; /* Set to 100% width of the screen */
         overflow: hidden;
         height: 0; /* Initially collapsed */
         opacity: 0; /* Hide initially */
@@ -223,7 +223,8 @@ header {
 
 /* Best Dishes Section */
 .best-dishes {
-    padding: 50px 20px;
+    padding-top: 40px;
+    padding-bottom: 60px;
     text-align: center;
     overflow: hidden;
 }
@@ -255,6 +256,7 @@ header {
 
 
 .carousel-track {
+    margin: 20px 20px;
     display: flex;
     transition: transform 0.3s ease; /* Smooth snap animation */
     will-change: transform;
@@ -280,6 +282,7 @@ header {
     color: white;
     border-radius: 20px;
     padding: 20px;
+    height: 60%;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     border: 3px solid white;
