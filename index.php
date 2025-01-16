@@ -22,7 +22,7 @@
         </div>
         <!-- Navigation Links -->
         <ul class="nav-links" id="nav-links">
-            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="index.php" class="active">Home</a></li>
             <li><a href="PDF/menu.pdf" target="_blank">Menukaart</a></li>
             <li><a href="php/menu.php">Bestel</a></li>
             <li><a href="#contact">Contact</a></li>
