@@ -1,36 +1,25 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Assuming the session has cart data
-    $cart = $_SESSION['cart'];
-    $order_method = $_SESSION['order_method']; // 'pickup' or 'delivery'
+session_start();
 
-    $customer_name = htmlspecialchars($_POST['customer_name']);
-    $customer_phone = htmlspecialchars($_POST['customer_phone']);
-    $customer_address = ($order_method === 'delivery') ? htmlspecialchars($_POST['customer_address']) : null;
+// Haal de winkelwagen uit de sessie
+$cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 
-    // Insert the order
-    $insert_order_sql = "INSERT INTO orders (customer_name, customer_address, customer_phone, order_type, status, created_at)
-                         VALUES (?, ?, ?, ?, 'pending', NOW())";
-    $stmt = $conn->prepare($insert_order_sql);
-    $stmt->bind_param('ssss', $customer_name, $customer_address, $customer_phone, $order_method);
-    $stmt->execute();
-    $order_id = $stmt->insert_id;
-
-    // Insert order items
-    foreach ($cart as $item) {
-        $insert_item_sql = "INSERT INTO order_items (order_id, menu_item_id, quantity) VALUES (?, ?, ?)";
-        $stmt = $conn->prepare($insert_item_sql);
-        $stmt->bind_param('iii', $order_id, $item['id'], $item['quantity']);
-        $stmt->execute();
-    }
-
-    // Clear cart and session
-    unset($_SESSION['cart'], $_SESSION['order_method']);
-    header('Location: order_success.php');
+// Check if cart is empty
+if (empty($cart)) {
+    echo "<h1>Je winkelwagen is leeg.</h1>";
+    echo "<p>Je moet eerst producten toevoegen aan je winkelwagen voordat je kunt afrekenen.</p>";
     exit;
 }
-?>
 
+// Bereken totaal en BTW
+$total = 0;
+foreach ($cart as $item) {
+    $total += $item['price'] * $item['quantity'];
+}
+
+$btw = $total * 0.21; // 21% BTW
+$total_with_btw = $total + $btw;
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
     <!-- Naar gegevens invullen -->
-    <form action="../view/fill_details.php" method="GET">
+    <form action="../view/fill_details.php" method="POST">
         <button type="submit">Volgende Stap</button>
     </form>
 </main>

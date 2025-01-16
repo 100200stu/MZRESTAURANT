@@ -1,48 +1,60 @@
 <?php
 session_start();
+
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include('../php/config.php');
 
-// Retrieve form data
-$customer_name = $_POST['name'];
-$customer_address = $_POST['address'] ?? null; // Address can be NULL for pickup orders
-$customer_phone = $_POST['phone'];
-$order_type = $_POST['order_type']; // 'afhalen' or 'bezorgen'
-$status = $order_type === 'afhalen' ? 'ready_for_pickup' : 'pending';
+// Get the form data from the POST request
+$name = $_POST['name'];
+$address = $_POST['address'];
+$phone = $_POST['phone'];  // Capture the phone number
+$payment_method = $_POST['payment_method'];
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+$total = 0;
 
 // Check if cart is empty
 if (empty($cart)) {
-    die("<h1>Error: The cart is empty. Please add items before placing an order.</h1>");
+    die("The cart is empty. Please add items to the cart before proceeding.");
 }
 
-// Insert order into `orders` table
-$sql = "INSERT INTO orders (customer_name, customer_address, customer_phone, order_type, status, created_at) 
-        VALUES (?, ?, ?, ?, ?, NOW())";
+// Calculate the total price
+foreach ($cart as $item) {
+    $total += $item['price'] * $item['quantity'];
+}
+
+$btw = $total * 0.21;  // 21% VAT
+$total_with_btw = $total + $btw;
+
+// Apply discount if available
+if (isset($_SESSION['voucher'])) {
+    $discount = $total_with_btw * $_SESSION['voucher']['discount'];
+    $total_with_btw -= $discount;
+}
+
+
+// Prepare the SQL statement to insert the order into the database
+$sql = "INSERT INTO orders (customer_name, customer_address, customer_phone, order_type, status, created_at)
+        VALUES (?, ?, ?, ?, 'pending', NOW())";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("sssss", $customer_name, $customer_address, $customer_phone, $order_type, $status);
 
+// Bind the parameters to the SQL statement
+$stmt->bind_param("ssss", $name, $address, $phone, $payment_method);
+
+// Execute the query
 if ($stmt->execute()) {
-    $order_id = $stmt->insert_id; // Get the ID of the newly inserted order
-
-    // Insert items into `order_items` table
-    $item_sql = "INSERT INTO order_items (order_id, menu_item_id, quantity) VALUES (?, ?, ?)";
-    $item_stmt = $conn->prepare($item_sql);
-
-    foreach ($cart as $item) {
-        $item_stmt->bind_param("iii", $order_id, $item['id'], $item['quantity']);
-        $item_stmt->execute();
-    }
-
-    // Clear the cart session after successful order placement
+    echo "<h1>Bedankt voor je bestelling!</h1>";
+    echo "<p>Je bestelling is succesvol geplaatst.</p>";
+    // Clear the cart after successful order
     unset($_SESSION['cart']);
-
-    echo "<h1>Thank you for your order, $customer_name!</h1>";
-    echo "<p>Your order has been successfully placed.</p>";
 } else {
-    echo "<h1>An error occurred while placing your order.</h1>";
+    echo "<h1>Er is een fout opgetreden.</h1>";
+    echo "<p>Error details: " . $stmt->error . "</p>";
 }
 
-// Close statements and connection
+// Close the statement and connection
 $stmt->close();
 $conn->close();
 ?>

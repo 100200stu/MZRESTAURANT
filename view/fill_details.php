@@ -22,6 +22,9 @@
         <label for="address">Adres:</label>
         <textarea id="address" name="address" required></textarea>
 
+        <label for="phone">Telefoonnummer:</label>
+        <input type="text" id="phone" name="phone" required>
+
         <label for="payment-method">Betalingsmethode:</label>
         <select id="payment-method" name="payment_method" required>
             <option value="ideal">iDEAL</option>

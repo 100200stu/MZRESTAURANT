@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Burger Menu Functionaliteit
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('nav-links');
 
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Popup Functionaliteit voor Bezorging of Afhalen
     const step1 = document.getElementById('step-1');
     const step2 = document.getElementById('step-2');
     const popup = document.getElementById('delivery-pickup-popup');
@@ -23,12 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let deliveryMethod = '';
 
-    // Popup tonen
     if (popup) {
         popup.classList.remove('hidden');
     }
 
-    // Afhalen en bezorgen logica
     pickupBtn?.addEventListener('click', () => {
         deliveryMethod = 'Afhalen';
         popup.classList.add('hidden');
@@ -54,45 +50,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const tabs = document.querySelectorAll('.tab'); // Alle knoppen
-        const categories = document.querySelectorAll('.menu-category'); // Alle categorieën
+    const tabs = document.querySelectorAll('.tab');
+    const categories = document.querySelectorAll('.menu-category');
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const category = tab.dataset.category;
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const category = tab.dataset.category;
 
-                if (category === 'all') {
-                    // Toon alle categorieën
-                    categories.forEach(cat => cat.classList.remove('hidden'));
-                } else {
-                    // Verberg alle categorieën
-                    categories.forEach(cat => cat.classList.add('hidden'));
+            if (category === 'all') {
+                categories.forEach(cat => cat.classList.remove('hidden'));
+            } else {
+                categories.forEach(cat => cat.classList.add('hidden'));
 
-                    // Toon de geselecteerde categorie
-                    const selectedCategory = document.getElementById(category);
-                    if (selectedCategory) {
-                        selectedCategory.classList.remove('hidden');
-                        selectedCategory.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
+                const selectedCategory = document.getElementById(category);
+                if (selectedCategory) {
+                    selectedCategory.classList.remove('hidden');
+                    selectedCategory.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
+            }
 
-                // Markeer de actieve knop
-                tabs.forEach(tab => tab.classList.remove('active'));
-                tab.classList.add('active');
-            });
+            tabs.forEach(tab => tab.classList.remove('active'));
+            tab.classList.add('active');
         });
-
-        // Activeer standaard de eerste knop
-        if (tabs.length > 0) {
-            tabs[0].click();
-        }
     });
 
+    if (tabs.length > 0) {
+        tabs[0].click();
+    }
 
-
-
-    // Winkelwagen Functionaliteit
     const cart = [];
     const cartCounter = document.getElementById('cart-count');
     const cartItemsContainer = document.getElementById('cart-items');
@@ -144,12 +129,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (checkoutButton) {
         checkoutButton.addEventListener('click', () => {
-            fetch('../php/store_cart.php', {
+            fetch('checkout.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(cart),
+                body: JSON.stringify({
+                    cart: cart,              // Pass cart items
+                    deliveryMethod: deliveryMethod  // Pass the delivery method
+                }),
             }).then(() => {
-                window.location.href = 'checkout.php';
+                window.location.href = 'checkout.php'; // Redirect to checkout page
             });
         });
     }
