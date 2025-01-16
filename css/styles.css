@@ -45,6 +45,7 @@ header {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+
 }
 
 /* Logo */
@@ -72,6 +73,7 @@ header {
 
 /* Mobile Navbar */
 .nav-links {
+    hig
     display: flex;
     list-style: none;
     margin-left: auto;
@@ -83,6 +85,7 @@ header {
     font-size: 18px;
     font-weight: bold;
     transition: color 0.3s;
+    margin-left: 15px;
 }
 
 /* Mobile Styles: Hide Navigation Links and Show Hamburger Icon */
@@ -94,36 +97,34 @@ header {
     .nav-links {
         display: flex;
         flex-direction: column;
+        align-items: center; /* Dit centreert de items horizontaal */
+        justify-content: center; /* Dit centreert de items verticaal */
         position: absolute;
         top: 80px;
+        left: 50%; /* Verplaats naar het midden van de pagina */
+        transform: translateX(-50%); /* Corrigeer om echt in het midden te staan */
         background-color: #d1321b;
-        padding: 20px;  /* Reduced padding to make it tighter */
+        padding: 20px;
         border-radius: 10px;
-        width: 80%; /* Set to 100% width of the screen */
-        overflow: hidden;
-        height: 0; /* Initially collapsed */
-        opacity: 0; /* Hide initially */
+        width: 80%; /* Breedte van het menu */
+        height: auto;
+        opacity: 0;
         transition: height 0.5s ease-in-out, opacity 0.3s ease-in-out;
         z-index: 1;
     }
 
-    /* Active state for the nav-links */
     .nav-links.active {
-        height: auto; /* Expands to natural height */
-        opacity: 1; /* Fade-in effect */
-        padding-top: 20px; /* Reduced space from the top */
-        padding-bottom: 20px; /* Reduced space at the bottom */
+        opacity: 1; /* Toon het menu */
+        height: auto; /* Laat het volledige menu zien */
     }
 
     .nav-links a {
         font-size: 18px;
-        margin: 8px 0;  /* Reduced margin to make links tighter */
+        margin: 8px 0;
         color: #fff;
-        transition: color 0.3s;
-        opacity: 0;
-        transform: translateY(10px); /* Start slightly down for smooth transition */
-        transition: all 0.3s ease;
+        transition: color 0.3s ease-in-out;
     }
+
 
     .nav-links.active a {
         opacity: 1;
@@ -277,11 +278,13 @@ header {
 
 
 .dish-card {
+    padding-top: 40px;
+    padding-bottom: 40px;
     flex: 0 0 250px;
     background-color: #d1321b;
     color: white;
     border-radius: 20px;
-    padding: 20px;
+    /* padding: 20px; */
     height: 60%;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -445,3 +448,43 @@ header {
     margin-top: 20px;
     text-align: center;
 }
+.footer {
+    background-color: #d1321b; /* Rood */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 16px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icon img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.social-icon img:hover {
+    transform: scale(1.2); /* Vergroot de iconen bij hover */
+    opacity: 0.8; /* Maak de iconen iets transparanter */
+}
+
+.copyright {
+    font-size: 14px;
+    margin-top: 10px;
+}
+

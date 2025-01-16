@@ -89,7 +89,25 @@
     </div>
 
     <!-- Button -->
-    <a href="PDF/menu.pdf" target="_blank" class="btn-menukaart">Menukaart</a> <!-- Updated to open PDF -->
+    <a href="PDF/Menu.pdf" target="_blank" class="btn-menukaart">Menukaart</a> <!-- Updated to open PDF -->
 </section>
+<footer class="footer">
+    <div class="footer-content">
+        <div class="social-links">
+
+            <a href="https://www.instagram.com/mzsnackbar/" target="_blank" class="social-icon">
+                <img src="images/instagram-icon.png" alt="Instagram M&Z Restaurant">
+            </a>
+            <a href="https://www.instagram.com/mzsnackbar/" target="_blank" class="social-icon">
+                <img src="images/TikTok-icon.png" alt="TikTok M&Z Restaurant">
+            </a>
+        </div>
+        <p class="copyright">
+            &copy; 2025 M&Z Restaurant. Alle rechten voorbehouden.
+        </p>
+    </div>
+</footer>
+
 </body>
+
 </html>
