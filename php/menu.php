@@ -6,8 +6,8 @@ include '../php/config.php'; // Include the database configuration
 if (isset($_GET['method']) && in_array($_GET['method'], ['pickup', 'delivery'])) {
     $_SESSION['order_method'] = $_GET['method']; // Store the method in the session
 } elseif (!isset($_SESSION['order_method'])) {
-    // If no method is set, redirect to the bestellen page
-    header('Location: bestellen.php');
+
+    header('Location: menu.php');
     exit;
 }
 
@@ -72,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['menu_item_id'], $_POS
     <link rel="stylesheet" href="../css/menu.css">
     <link rel="stylesheet" href="../css/styles.css">
     <script src="../script/cart.js" defer></script>
+    <script src="../script/script.js" defer></script>
 
 </head>
 <body>
