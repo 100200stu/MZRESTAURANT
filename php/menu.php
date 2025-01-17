@@ -26,11 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['menu_item_id'], $_POS
     $quantity = intval($_POST['quantity']);
 
     if ($quantity > 0) {
-        // Check if item already exists in cart
+        // Check if the item already exists in the cart
         if (isset($_SESSION['cart'][$menu_item_id])) {
             $_SESSION['cart'][$menu_item_id]['quantity'] += $quantity;
         } else {
-            // Retrieve item details from database
             $item_sql = "SELECT id, name, price FROM menu_items WHERE id = ?";
             $stmt = $conn->prepare($item_sql);
             $stmt->bind_param('i', $menu_item_id);
@@ -48,12 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['menu_item_id'], $_POS
             }
         }
     }
-
-    // Redirect back to menu
-    header('Location: menu.php');
+    // Voorkom eindeloze redirect
+    if (!headers_sent()) {
+        header('Location: menu.php');
+    }
     exit;
 }
-
 
 ?>
 
