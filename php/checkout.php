@@ -67,7 +67,7 @@ foreach ($cart as $item) {
     $total += $item['price'] * $item['quantity'];
 }
 
-$btw = $total * 0.09; // 21% BTW
+$btw = $total * 0.21; // 21% BTW
 $total_with_btw = $total + $btw;
 ?>
 
@@ -158,4 +158,3 @@ $total_with_btw = $total + $btw;
 
 </body>
 </html>
-
